@@ -4,6 +4,7 @@ include(FetchContent)
 FetchContent_Declare(
 	googletest
 	URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+	DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
 FetchContent_MakeAvailable(googletest)
 
@@ -14,11 +15,39 @@ file(GLOB INTEGRATION_SOURCES integration/*.cpp)
 
 add_executable(tests_unit ${UNIT_SOURCES})
 target_link_libraries(tests_unit PRIVATE gtest_main hungarian_lottery Threads::Threads)
-add_test(NAME unit_tests COMMAND tests_unit)
+
+# Register individual GoogleTest cases with CTest so each unit test appears
+# as its own test (improves reporting and allows running a subset).
+include(GoogleTest)
+gtest_discover_tests(tests_unit)
 
 add_executable(tests_integration ${INTEGRATION_SOURCES})
 target_link_libraries(tests_integration PRIVATE gtest_main hungarian_lottery Threads::Threads)
-add_test(NAME integration_tests COMMAND tests_integration)
+
+## Copy test data into the build tree so tests can find files at runtime.
+add_custom_target(copy_test_data
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_SOURCE_DIR}/tests/data
+		${CMAKE_BINARY_DIR}/tests/data
+	COMMENT "Copy tests/data -> ${CMAKE_BINARY_DIR}/tests/data"
+)
+
+add_dependencies(tests_integration copy_test_data)
+add_test(NAME integration_tests	COMMAND tests_integration)
+
+# Provide the build-time path to the copied test data so the tests can
+# reliably locate files regardless of the current working directory.
+target_compile_definitions(tests_integration PRIVATE TEST_DATA_DIR=\"${CMAKE_BINARY_DIR}/tests/data\")
+
+# Ensure integration tests are built with Release performance flags even if the
+# overall build type differs. Users can still override per-target flags.
+target_compile_options(tests_integration PRIVATE
+	$<$<CONFIG:Release>:-O3>
+	$<$<CONFIG:Release>:-Ofast>
+	$<$<CONFIG:Release>:-march=native>
+	$<$<CONFIG:Release>:-flto>
+)
+target_link_options(tests_integration PRIVATE $<$<CONFIG:Release>:-flto>)
 
 if(ENABLE_COVERAGE)
 	find_program(LCOV_EXEC lcov)
@@ -27,7 +56,8 @@ if(ENABLE_COVERAGE)
 	if(LCOV_EXEC AND GENHTML_EXEC)
 		add_custom_target(coverage
 			COMMAND ${CMAKE_COMMAND} -E echo "Running unit tests for coverage..."
-			COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -V
+			# Run the unit test executable directly so we only execute unit tests
+			COMMAND ${CMAKE_BINARY_DIR}/tests/tests_unit --gtest_color=no --gtest_output=xml:tests_unit_results.xml
 			COMMAND ${CMAKE_COMMAND} -E echo "Capturing coverage with lcov..."
 			COMMAND ${LCOV_EXEC} --capture --directory ${CMAKE_BINARY_DIR} --output-file coverage.info
 			COMMAND ${LCOV_EXEC} --remove coverage.info '/usr/*' '*/_deps/*' '*/googletest-src/*' --output-file coverage.info.cleaned
@@ -41,7 +71,7 @@ if(ENABLE_COVERAGE)
 	else()
 		add_custom_target(coverage
 			COMMAND ${CMAKE_COMMAND} -E echo "Running unit tests - lcov/genhtml not found"
-			COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -V
+			COMMAND ${CMAKE_BINARY_DIR}/tests/tests_unit --gtest_color=no --gtest_output=xml:tests_unit_results.xml
 			COMMAND ${CMAKE_COMMAND} -E echo "lcov or genhtml not found. Install lcov and genhtml to generate coverage reports."
 			WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 			DEPENDS tests_unit

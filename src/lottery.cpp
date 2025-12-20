@@ -3,9 +3,6 @@
 
 using namespace hungarian;
 
-// forward declaration of cached processor factory (defined in src/cached_lottery_processor.cpp)
-namespace hungarian { std::unique_ptr<ILotteryProcessor> createCachedProcessor(); }
-
 void Lottery::run(int argc, char** argv, LotteryMode mode) {
     // Parse arguments
     std::string playersNumbersFile = parseArguments(argc, argv);
@@ -34,6 +31,10 @@ void Lottery::run(int argc, char** argv, LotteryMode mode) {
     ConsoleWriter::printResult(winners);
 }
 
+std::uint32_t Lottery::getNumberOfPlayers() {
+    return m_playersNumbersReader.players().size();
+}
+
 std::string Lottery::parseArguments(int argc, char** argv) const {
     if (argc != 2) {
         ConsoleWriter::printHelpMessage();
@@ -47,10 +48,6 @@ void Lottery::instantiateProcessor(LotteryMode mode) {
     switch (mode) {
         case LotteryMode::BruteForce:
             m_processor = std::make_unique<BruteForceLotteryProcessor>();
-            break;
-        case LotteryMode::Cached:
-            m_processor = createCachedProcessor();
-            if (!m_processor) throw std::runtime_error("failed to create cached processor");
             break;
         default:
             throw std::runtime_error("Unknown lottery mode");

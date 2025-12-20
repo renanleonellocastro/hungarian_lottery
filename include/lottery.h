@@ -37,6 +37,12 @@ public:
      */
     void run(int argc, char** argv, LotteryMode mode);
 
+    /**
+     * @brief Get the number of players loaded from the input file.
+     * @return Number of players.
+     */
+    std::uint32_t getNumberOfPlayers();
+
 private:
     /**
      * @brief ILottery processor instance which performs the core processing.
