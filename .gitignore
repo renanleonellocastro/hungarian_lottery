@@ -3,7 +3,6 @@ build/
 *.obj
 *.exe
 *.log
-tests/data/*.txt
 tests/integration/*.txt
 # Prerequisites
 *.d

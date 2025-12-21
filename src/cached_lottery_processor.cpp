@@ -67,15 +67,6 @@ void CachedLotteryProcessor::computeWinnersWithFiveMatchingNumbers(std::array<ui
 void CachedLotteryProcessor::initializeCache() {
     clearCache();
     reserveCache();
-
-    auto insertZero = [this](const std::array<uint8_t,5>& combination) {
-        m_cache.emplace(encodeKey(combination), 0u);
-    };
-
-    CombinationGenerator<2>::run(insertZero);
-    CombinationGenerator<3>::run(insertZero);
-    CombinationGenerator<4>::run(insertZero);
-    CombinationGenerator<5>::run(insertZero);
 }
 
 void CachedLotteryProcessor::clearCache() {
@@ -108,7 +99,9 @@ void CachedLotteryProcessor::preProcessPlayer(const std::array<uint8_t,5>& pick)
 }
 
 uint32_t CachedLotteryProcessor::countMatches(const std::array<uint8_t,5>& key) const {
-    return m_cache.at(encodeKey(key));
+    auto encodedKey = encodeKey(key);
+    auto it = m_cache.find(encodedKey);
+    return it != m_cache.end() ? it->second : 0;
 }
 
 std::vector<std::array<uint8_t, 5>> CachedLotteryProcessor::generateCombinations(const std::array<uint8_t, 5>& numbers, int combinationSize) const {
