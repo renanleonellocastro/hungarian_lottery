@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
 
     try {
         Lottery lottery;
-        LotteryMode mode = LotteryMode::BruteForce;
+        LotteryMode mode = LotteryMode::Cached;
         lottery.run(argc, argv, mode);
     } catch (const std::exception& ex) {
         LOG(FATAL) << "Unhandled exception: " << ex.what();

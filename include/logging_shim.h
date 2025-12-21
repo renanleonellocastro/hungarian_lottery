@@ -22,7 +22,6 @@ struct _MiniLog {
     ~_MiniLog() {
         if (sev >= MINI_LOG_MIN_SEVERITY) {
             std::cerr << s.str() << std::endl;
-            if (sev == FATAL) std::abort();
         }
     }
 };

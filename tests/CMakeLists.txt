@@ -16,6 +16,9 @@ file(GLOB INTEGRATION_SOURCES integration/*.cpp)
 add_executable(tests_unit ${UNIT_SOURCES})
 target_link_libraries(tests_unit PRIVATE gtest_main hungarian_lottery Threads::Threads)
 
+# Expose test-only helpers in headers when compiling the unit test binary.
+target_compile_definitions(tests_unit PRIVATE UNIT_TESTING=1)
+
 # Register individual GoogleTest cases with CTest so each unit test appears
 # as its own test (improves reporting and allows running a subset).
 include(GoogleTest)

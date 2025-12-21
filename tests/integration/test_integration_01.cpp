@@ -188,7 +188,7 @@ static void run_integration_test_for_idx_and_mode(int idx, LotteryMode mode) {
 }
 
 TEST(Integration01, FullRun) {
-    std::vector<LotteryMode> modes = { LotteryMode::BruteForce };
+    std::vector<LotteryMode> modes = { LotteryMode::Cached };
     for (int i = 1; i < 41; ++i) {
         for (auto mode : modes) {
             run_integration_test_for_idx_and_mode(i, mode);

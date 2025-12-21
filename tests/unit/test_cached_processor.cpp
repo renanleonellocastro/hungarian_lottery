@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "cached_lottery_processor.h"
 #include "brute_force_lottery_processor.h"
-#include "i_lottery_processor.h"
-
-// forward-declare factory in hungarian namespace (defined in src)
-namespace hungarian { std::unique_ptr<ILotteryProcessor> createCachedProcessor(); }
 
 using namespace hungarian;
 
@@ -21,7 +18,7 @@ TEST(CachedProcessor, MatchesBruteForce) {
     std::array<uint8_t,5> pick = {1,2,3,4,5};
     Winners wbf = bf.computeWinners(pick);
 
-    auto cached = createCachedProcessor();
+    std::unique_ptr<ILotteryProcessor> cached = std::make_unique<CachedLotteryProcessor>();
     ASSERT_TRUE(cached);
     cached->preComputeWinners(players);
     Winners wc = cached->computeWinners(pick);

@@ -1,4 +1,5 @@
 #include "lottery.h"
+#include "cached_lottery_processor.h"
 #include "brute_force_lottery_processor.h"
 
 using namespace hungarian;
@@ -48,6 +49,9 @@ void Lottery::instantiateProcessor(LotteryMode mode) {
     switch (mode) {
         case LotteryMode::BruteForce:
             m_processor = std::make_unique<BruteForceLotteryProcessor>();
+            break;
+        case LotteryMode::Cached:
+            m_processor = std::make_unique<CachedLotteryProcessor>();
             break;
         default:
             throw std::runtime_error("Unknown lottery mode");

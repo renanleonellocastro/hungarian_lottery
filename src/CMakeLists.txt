@@ -25,6 +25,11 @@ if(glog_FOUND)
   target_link_libraries(hungarian_lottery PRIVATE ${glog_LIBRARIES})
 endif()
 
+# Expose test helpers when building tests so unit tests can exercise internal helpers.
+if (BUILD_TESTS)
+  target_compile_definitions(hungarian_lottery PRIVATE UNIT_TESTING=1)
+endif()
+
 ## No top-level app target here; tests and other consumers link to the library.
 
 # Places the runtime binary in the top-level binary directory so helper scripts

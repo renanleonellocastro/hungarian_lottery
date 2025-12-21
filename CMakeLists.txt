@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 project(hungarian_lottery VERSION 1.0 LANGUAGES CXX)
 
+include(FetchContent)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 option(BUILD_TESTS "Build unit tests" ON)

@@ -10,6 +10,8 @@ namespace hungarian {
 
 /**
  * @brief Result counts for match groups.
+ * This struct holds the winners with 5, 4, 3, and 2 matching numbers.
+ * Member variables are initialized to zero.
  */
 struct Winners {
     uint32_t five{};
