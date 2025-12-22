@@ -34,7 +34,8 @@ TEST(LotteryRun, EndToEndBruteForce) {
     auto* oldout = std::cout.rdbuf(oss.rdbuf());
 
     Lottery l;
-    EXPECT_NO_THROW(l.run(2, argv, LotteryMode::BruteForce));
+    EXPECT_NO_THROW(l.initialize(2, argv, LotteryMode::BruteForce));
+    EXPECT_NO_THROW(l.run());
 
     std::cout.rdbuf(oldout);
     std::cin.rdbuf(oldin);

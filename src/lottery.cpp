@@ -4,7 +4,7 @@
 
 using namespace hungarian;
 
-void Lottery::run(int argc, char** argv, LotteryMode mode) {
+void Lottery::initialize(int argc, char** argv, LotteryMode mode) {
     // Parse arguments
     std::string playersNumbersFile = parseArguments(argc, argv);
 
@@ -20,7 +20,9 @@ void Lottery::run(int argc, char** argv, LotteryMode mode) {
 
     // Indicate readiness
     ConsoleWriter::printReady();
+}
 
+void Lottery::run() {
     // Read lottery pick from stdin
     m_consoleReader.readLotteryPick();
     std::array<uint8_t,5> lotteryPick = m_consoleReader.getLotteryPick();

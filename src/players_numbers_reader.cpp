@@ -4,7 +4,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <algorithm>
-#include "logging_shim.h"
+#include <glog/logging.h>
 
 using namespace hungarian;
 
@@ -19,7 +19,7 @@ std::vector<uint8_t> PlayersNumbersReader::parseLine(const std::string& line, si
     }
 
     if (numbers.size() != 5) {
-        LOG(FATAL) << "Invalid numbers count on line " << lineno << " (expected 5).";
+        LOG(ERROR) << "Invalid numbers count on line " << lineno << " (expected 5).";
         throw std::runtime_error("invalid numbers count");
     }
 
@@ -29,7 +29,7 @@ std::vector<uint8_t> PlayersNumbersReader::parseLine(const std::string& line, si
 
 void PlayersNumbersReader::validateValue(int value, size_t lineno) const {
     if (value < 1 || value > 90) {
-        LOG(FATAL) << "Value out of range on line " << lineno << ": " << value;
+        LOG(ERROR) << "Value out of range on line " << lineno << ": " << value;
         throw std::runtime_error("value out of range");
     }
 }
@@ -39,7 +39,7 @@ void PlayersNumbersReader::validateUnique(const std::vector<uint8_t>& numbers, s
     std::sort(sorted_numbers.begin(), sorted_numbers.end());
 
     if (std::unique(sorted_numbers.begin(), sorted_numbers.end()) != sorted_numbers.end()) {
-        LOG(FATAL) << "Duplicate numbers found on line " << lineno;
+        LOG(ERROR) << "Duplicate numbers found on line " << lineno;
         throw std::runtime_error("duplicate numbers in pick");
     }
 }
@@ -51,7 +51,7 @@ void PlayersNumbersReader::readFile(const std::string& filepath) {
     std::ifstream ifs(filepath);
 
     if (!ifs) {
-        LOG(FATAL) << "Failed to open input file: " << filepath;
+        LOG(ERROR) << "Failed to open input file: " << filepath;
         throw std::runtime_error("failed to open input file");
     }
 
@@ -61,5 +61,5 @@ void PlayersNumbersReader::readFile(const std::string& filepath) {
         m_players.push_back(parseLine(line, lineno));
     }
 
-    LOG(DEBUG) << "Read " << m_players.size() << " players from " << filepath;
+    LOG(INFO) << "Read " << m_players.size() << " players from " << filepath;
 }

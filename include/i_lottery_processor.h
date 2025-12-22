@@ -1,13 +1,13 @@
 /**
- * @file lottery_processor.h
- * @brief Abstract lottery processor template and Winners struct.
+ * @file i_lottery_processor.h
+ * @brief Interface for lottery processors.
  */
 #pragma once
 
-#include "winners.h"
-
 #include <array>
 #include <vector>
+
+#include "winners.h"
 
 namespace hungarian {
 

@@ -4,8 +4,8 @@
  */
 #pragma once
 
-#include <cstdint>
 #include <memory>
+#include <cstdint>
 
 namespace hungarian {
 
@@ -30,9 +30,9 @@ private:
 
     /**
      * @internal
-     * @brief Assign parsed lottery pick values to member fields.
+     * @brief Assign lottery pick values to member variable.
      *
-     * Small helper used to centralize conversion to `uint8_t` and assignment.
+     * Small helper used to assign values to member variable after validation.
      *
      * @param lotteryPick The 5 lottery pick numbers.
      */

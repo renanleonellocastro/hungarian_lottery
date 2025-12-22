@@ -18,20 +18,31 @@ add_library(hungarian_lottery
 
 target_include_directories(hungarian_lottery PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
-find_package(glog QUIET)
-if(glog_FOUND)
-  target_compile_definitions(hungarian_lottery PRIVATE HAVE_GLOG=1)
-  target_include_directories(hungarian_lottery PRIVATE ${glog_INCLUDE_DIRS})
-  target_link_libraries(hungarian_lottery PRIVATE ${glog_LIBRARIES})
+# Find google log external library
+set(GLOG_TARGET glog::glog)
+find_package(glog CONFIG QUIET)
+
+if (glog_FOUND)
+    message(STATUS "Found glog via CMake config")
+else()
+    message(STATUS "glog CMake config not found, using pkg-config")
+
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GLOG REQUIRED libglog)
+
+    add_library(glog::glog INTERFACE IMPORTED)
+    target_include_directories(glog::glog INTERFACE ${GLOG_INCLUDE_DIRS})
+    target_link_libraries(glog::glog INTERFACE ${GLOG_LIBRARIES})
 endif()
+
+target_link_libraries(hungarian_lottery PRIVATE ${GLOG_TARGET})
 
 # Expose test helpers when building tests so unit tests can exercise internal helpers.
 if (BUILD_TESTS)
   target_compile_definitions(hungarian_lottery PRIVATE UNIT_TESTING=1)
 endif()
 
-## No top-level app target here; tests and other consumers link to the library.
-
+# Tests and other consumers link to the library.
 # Places the runtime binary in the top-level binary directory so helper scripts
 # can find it at `${CMAKE_BINARY_DIR}/lottery`.
 add_executable(lottery main.cpp)
@@ -40,10 +51,5 @@ set_target_properties(lottery PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY
 
 # Ensure the executable benefits from the same Release optimizations when the
 # build configuration is Release.
-target_compile_options(lottery PRIVATE
-  $<$<CONFIG:Release>:-O3>
-  $<$<CONFIG:Release>:-Ofast>
-  $<$<CONFIG:Release>:-march=native>
-  $<$<CONFIG:Release>:-flto>
-)
+target_compile_options(lottery PRIVATE $<$<CONFIG:Release>:-O3> $<$<CONFIG:Release>:-Ofast> $<$<CONFIG:Release>:-march=native> $<$<CONFIG:Release>:-flto>)
 target_link_options(lottery PRIVATE $<$<CONFIG:Release>:-flto>)

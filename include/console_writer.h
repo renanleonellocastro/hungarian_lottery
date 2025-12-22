@@ -4,9 +4,9 @@
  */
 #pragma once
 
-#include "winners.h"
-
 #include <iostream>
+
+#include "winners.h"
 
 namespace hungarian {
 

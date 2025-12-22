@@ -29,13 +29,21 @@ enum class LotteryMode {
 class Lottery {
 public:
     /**
-     * @brief Run the lottery application with given command-line arguments.
+     * @brief Initialize a new Lottery with new players playing the game.
+     * 
+     * This initializes the lottery by reading players' numbers from the provided file path.
      * @param argc Argument count.
      * @param argv Argument vector.
      * @param mode Lottery processing mode.
      * @throws std::runtime_error on errors.
      */
-    void run(int argc, char** argv, LotteryMode mode);
+    void initialize(int argc, char** argv, LotteryMode mode);
+
+    /**
+     * @brief Run the lottery application with given command-line arguments.
+     * @throws std::runtime_error on errors.
+     */
+    void run();
 
     /**
      * @brief Get the number of players loaded from the input file.

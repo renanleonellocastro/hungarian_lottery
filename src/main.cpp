@@ -1,27 +1,36 @@
-#include <iostream>
-#include <array>
-#include <exception>
+#include <glog/logging.h>
+#include <glog/log_severity.h>
 
 #include "lottery.h"
-#include "logging_shim.h"
+
+#include <array>
+#include <iostream>
+#include <exception>
+
 
 using namespace hungarian;
 
 int main(int argc, char** argv) {
-#ifdef HAVE_GLOG
     google::InitGoogleLogging(argv[0]);
     FLAGS_logtostderr = 1;
     FLAGS_minloglevel = google::GLOG_ERROR;
-#endif
 
     try {
         Lottery lottery;
         LotteryMode mode = LotteryMode::Cached;
-        lottery.run(argc, argv, mode);
+
+        lottery.initialize(argc, argv, mode);
+
+        while (true) {
+            lottery.run();
+        }
+
     } catch (const std::exception& ex) {
-        LOG(FATAL) << "Unhandled exception: " << ex.what();
+        LOG(ERROR) << "Unhandled exception: " << ex.what();
+        google::ShutdownGoogleLogging();
         return 1;
     }
 
+    google::ShutdownGoogleLogging();
     return 0;
 }

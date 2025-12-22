@@ -145,7 +145,8 @@ static void run_integration_test_for_idx_and_mode(int idx, LotteryMode mode) {
     auto thread_start = steady_clock::now();
     std::thread t([&]{
         try {
-            l.run(2, argv, mode);
+            l.initialize(2, argv, mode);
+            l.run();
         } catch (...) {
         }
     });
@@ -154,6 +155,8 @@ static void run_integration_test_for_idx_and_mode(int idx, LotteryMode mode) {
     steady_clock::time_point ready_time;
     bool saw_ready = tee.wait_for("READY", seconds(30), ready_time);
     ASSERT_TRUE(saw_ready) << "Timed out waiting for READY for index " << idx;
+
+    // Calculate time to READY
     auto us_to_ready = duration_cast<microseconds>(ready_time - thread_start).count();
 
     // Inject picks into stdin now that READY appeared.
@@ -167,7 +170,7 @@ static void run_integration_test_for_idx_and_mode(int idx, LotteryMode mode) {
 
     // Print timings to stdout (these will be captured by the test runner)
     auto us_result_since_start = duration_cast<microseconds>(result_time - thread_start).count();
-    std::cout << "INTEGRATION TEST: " << idx << std::endl;
+    std::cout << "INTEGRATION TEST: " << idx << " \033[32mPASSED" << "\033[0m" << std::endl;
     std::cout << "PLAYERS: " << l.getNumberOfPlayers() << std::endl;
     std::cout << "MODE: " << (mode==LotteryMode::BruteForce ? "BruteForce" : "Cached") << std::endl;
     std::cout << "READY: " << us_to_ready << "us" << std::endl;

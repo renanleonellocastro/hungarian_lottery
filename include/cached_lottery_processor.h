@@ -1,3 +1,10 @@
+/**
+ * @file cached_lottery_processor.h
+ * @brief Cached lottery processor that caches all possible lottery combinations.
+ * and counts players having those combinations.
+ */
+#pragma once
+
 #include "i_lottery_processor.h"
 
 #include <array>
@@ -123,7 +130,7 @@ private:
      * @return A vector of combinations, each represented as an array of uint8_t with 5 positions.
      * It uses "0" for unused positions.
      */
-    std::vector<std::array<uint8_t, 5>> generateCombinations(const std::array<uint8_t,5>& numbers, int combinationSize) const;
+    std::vector<std::array<uint8_t,5>> generateCombinations(const std::array<uint8_t,5>& numbers, int combinationSize) const;
 
     /**
      * @internal

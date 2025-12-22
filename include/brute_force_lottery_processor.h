@@ -6,17 +6,21 @@
 
 #include "i_lottery_processor.h"
 
+#include <array>
 #include <vector>
 #include <memory>
-#include <array>
 #include <algorithm>
 
 namespace hungarian {
 
 /**
  * @brief Brute-force lottery processor implementation.
- * This processor directly compares each player's numbers against the
+ * This processor directly compares each player's number against the
  * lottery pick to count matches.
+ * 
+ * This is probably one of the slowest implementations, but it is
+ * straightforward and does not require too much memory. Also this is good to
+ * validate other more complex implementations.
  */
 class BruteForceLotteryProcessor : public ILotteryProcessor {
 public:

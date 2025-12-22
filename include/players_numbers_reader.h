@@ -1,6 +1,6 @@
 /**
  * @file players_numbers_reader.h
- * @brief Reader for player's numbers files.
+ * @brief Reader for players' numbers files.
  */
 #pragma once
 
