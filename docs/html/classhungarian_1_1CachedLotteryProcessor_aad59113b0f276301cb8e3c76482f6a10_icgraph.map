@@ -1,0 +1,9 @@
+<map id="hungarian::CachedLotteryProcessor::countMatches" name="hungarian::CachedLotteryProcessor::countMatches">
+<area shape="rect" id="node1" title="Counts how many players have the exact matching combination represented by the key." alt="" coords="607,133,777,174"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a11c7dcc0262006a34cce51dbcbc7ccf0" title="Compute winners with five matching numbers." alt="" coords="344,5,559,61"/>
+<area shape="rect" id="node5" href="$classhungarian_1_1CachedLotteryProcessor.html#a022697f568ae2478b9f671c0c749711d" title="Compute winners with four matching numbers." alt="" coords="344,85,559,141"/>
+<area shape="rect" id="node6" href="$classhungarian_1_1CachedLotteryProcessor.html#aa584651f73b41af87a2a3d8affdd8b75" title="Compute winners with three matching numbers." alt="" coords="344,165,559,221"/>
+<area shape="rect" id="node7" href="$classhungarian_1_1CachedLotteryProcessor.html#a7cd38775a28fa4370ba0b7607853549f" title="Compute winners with two matching numbers." alt="" coords="344,245,559,301"/>
+<area shape="rect" id="node3" href="$classhungarian_1_1CachedLotteryProcessor.html#a76fb0ee815dc6c7135692c69880e3048" title="Compute the winners for a given pick using the pre&#45;computed cache." alt="" coords="108,133,296,174"/>
+<area shape="rect" id="node4" href="$test__cached__processor_8cpp.html#a24a0af34438cd0d8a445cef4065ff89d" title=" " alt="" coords="5,140,60,167"/>
+</map>

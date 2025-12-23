@@ -1,0 +1,26 @@
+var classhungarian_1_1CachedLotteryProcessor =
+[
+    [ "clearCache", "classhungarian_1_1CachedLotteryProcessor.html#a8bddd53588ec6b9f4a8beaeadbbd342f", null ],
+    [ "computeChunkSize", "classhungarian_1_1CachedLotteryProcessor.html#aa443a7bdd82da0f562901a89b61351ea", null ],
+    [ "computeWinners", "classhungarian_1_1CachedLotteryProcessor.html#a76fb0ee815dc6c7135692c69880e3048", null ],
+    [ "computeWinnersWithFiveMatchingNumbers", "classhungarian_1_1CachedLotteryProcessor.html#a11c7dcc0262006a34cce51dbcbc7ccf0", null ],
+    [ "computeWinnersWithFourMatchingNumbers", "classhungarian_1_1CachedLotteryProcessor.html#a022697f568ae2478b9f671c0c749711d", null ],
+    [ "computeWinnersWithThreeMatchingNumbers", "classhungarian_1_1CachedLotteryProcessor.html#aa584651f73b41af87a2a3d8affdd8b75", null ],
+    [ "computeWinnersWithTwoMatchingNumbers", "classhungarian_1_1CachedLotteryProcessor.html#a7cd38775a28fa4370ba0b7607853549f", null ],
+    [ "countMatches", "classhungarian_1_1CachedLotteryProcessor.html#aad59113b0f276301cb8e3c76482f6a10", null ],
+    [ "determineThreadCount", "classhungarian_1_1CachedLotteryProcessor.html#a69efd9d8b30e92aaacbf1e7b982f7e52", null ],
+    [ "encodeKey", "classhungarian_1_1CachedLotteryProcessor.html#a680d222b2c863f145b81c16ac9c80222", null ],
+    [ "generateCombinations", "classhungarian_1_1CachedLotteryProcessor.html#a4d642b2270abf81c139c7b877453b2d4", null ],
+    [ "generateCombinationsOf2", "classhungarian_1_1CachedLotteryProcessor.html#a9fdec5cc8ea6da46fa09059d2f601c72", null ],
+    [ "generateCombinationsOf3", "classhungarian_1_1CachedLotteryProcessor.html#a6837eb67ccfbd86ac8bc459819e839a5", null ],
+    [ "generateCombinationsOf4", "classhungarian_1_1CachedLotteryProcessor.html#a9e03c1e2a4108afe9a11d110e2d9a088", null ],
+    [ "generateEncodedCombinationKeys", "classhungarian_1_1CachedLotteryProcessor.html#a725b3b38d40deb2bb95d5728dc414d30", null ],
+    [ "getHashKeyFromNumbersCombination", "classhungarian_1_1CachedLotteryProcessor.html#a5c8abe25ba0005027cfc3d9118959e77", null ],
+    [ "initializeCache", "classhungarian_1_1CachedLotteryProcessor.html#a3a1cef44fada22c7f42fe99ad03c8366", null ],
+    [ "mergeLocalCaches", "classhungarian_1_1CachedLotteryProcessor.html#aceb473bd6d823a7cae247f9bcbd02a4e", null ],
+    [ "preComputeInParallel", "classhungarian_1_1CachedLotteryProcessor.html#a62a5e24c967334d0f0451474bd4f9eeb", null ],
+    [ "preComputeWinners", "classhungarian_1_1CachedLotteryProcessor.html#a17387a408ae663691168bd7cfcd2f819", null ],
+    [ "processPlayerChunk", "classhungarian_1_1CachedLotteryProcessor.html#a3d2271c91a6636555fca9ee5085b248b", null ],
+    [ "reserveCache", "classhungarian_1_1CachedLotteryProcessor.html#a54250de39c46926b5c78a59bdf6c3a6c", null ],
+    [ "m_cache", "classhungarian_1_1CachedLotteryProcessor.html#ae12b4fb32b05b21aa4409c9494f7e0e5", null ]
+];

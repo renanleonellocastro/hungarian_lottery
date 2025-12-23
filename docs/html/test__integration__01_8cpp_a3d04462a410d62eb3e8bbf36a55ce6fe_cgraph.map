@@ -1,0 +1,34 @@
+<map id="runIntegrationTestForIdxAndMode" name="runIntegrationTestForIdxAndMode">
+<area shape="rect" id="node1" title=" " alt="" coords="5,169,168,211"/>
+<area shape="rect" id="node2" href="$classTeeBuf.html#a9f79a533d3f679a1862f5534cdaf32ff" title=" " alt="" coords="231,53,353,79"/>
+<area shape="rect" id="node3" href="$classhungarian_1_1Lottery.html#a87fe9125940f5c6eb2968499c5a74e98" title="Get the number of players loaded from the input file." alt="" coords="216,104,368,145"/>
+<area shape="rect" id="node5" href="$classhungarian_1_1Lottery.html#a95ed3a6aae786802a3553c18c1dbb709" title="Initialize a new Lottery with new players playing the game." alt="" coords="229,169,355,211"/>
+<area shape="rect" id="node24" href="$classhungarian_1_1Lottery.html#a7321b53774079b6bcf87e1ba4daaf928" title="Run the lottery application with given command&#45;line arguments." alt="" coords="216,339,368,366"/>
+<area shape="rect" id="node32" href="$classTeeBuf.html#abeaf7a9576ce396383d13c0be3f4e659" title=" " alt="" coords="235,390,349,417"/>
+<area shape="rect" id="node4" href="$classhungarian_1_1PlayersNumbersReader.html#af9c18921c4c071acf06beec412fbd5f9" title="Access the parsed players numbers as vector of 5&#45;length vectors." alt="" coords="416,5,600,47"/>
+<area shape="rect" id="node6" href="$classhungarian_1_1Lottery.html#aff23e980c8440cfa2be83ce8b8033445" title="Instantiate the lottery processor based on the selected mode." alt="" coords="433,71,583,112"/>
+<area shape="rect" id="node7" href="$classhungarian_1_1Lottery.html#ae7ca5baa481ecd5f2f078dfa393b58c0" title="Parse the input arguments." alt="" coords="445,136,571,177"/>
+<area shape="rect" id="node9" href="$classhungarian_1_1ConsoleWriter.html#ac4c61b207807c7db0710b7f111fd9c0f" title="Prints READY and newline to stdout." alt="" coords="424,201,592,243"/>
+<area shape="rect" id="node10" href="$classhungarian_1_1PlayersNumbersReader.html#a5079143e23fa48527a8494a4c98969f0" title="Read file and populate internal structure." alt="" coords="416,267,600,308"/>
+<area shape="rect" id="node8" href="$classhungarian_1_1ConsoleWriter.html#a95eb3bbeb8d0331de9c79eb619b34071" title="Prints help message to stdout." alt="" coords="665,124,833,165"/>
+<area shape="rect" id="node11" href="$classhungarian_1_1PlayersNumbersReader.html#a1e5b36f8089773ad910b7b0d58de1ff4" title="Determine optimal thread count for parallel processing." alt="" coords="648,189,851,231"/>
+<area shape="rect" id="node12" href="$classhungarian_1_1PlayersNumbersReader.html#abd2537fcacf32ba4bb751c9f6506df05" title="Merge parsed chunks into the main players vector." alt="" coords="652,255,847,296"/>
+<area shape="rect" id="node13" href="$classhungarian_1_1PlayersNumbersReader.html#a37ddd8c55c15a5e87046ecaead91b632" title="Parse lines in parallel using multiple threads." alt="" coords="655,320,844,361"/>
+<area shape="rect" id="node23" href="$classhungarian_1_1PlayersNumbersReader.html#a4f3266bc0a07a042f381fae229b2333e" title="Read all lines from the specified file." alt="" coords="657,385,841,427"/>
+<area shape="rect" id="node14" href="$classhungarian_1_1PlayersNumbersReader.html#a998367581f4e6a7eca2da1453a2b3a6d" title="Collect results from multiple parsing tasks." alt="" coords="899,255,1083,296"/>
+<area shape="rect" id="node15" href="$classhungarian_1_1PlayersNumbersReader.html#aca4a88f64cf2cffc62c95df76e2ae650" title="Compute chunk size for dividing work among threads." alt="" coords="899,320,1083,361"/>
+<area shape="rect" id="node16" href="$classhungarian_1_1PlayersNumbersReader.html#a635c879eaae85b037aa4ffd22eb99146" title="Spawn a thread to parse a chunk of lines." alt="" coords="899,385,1083,427"/>
+<area shape="rect" id="node17" href="$classhungarian_1_1PlayersNumbersReader.html#a3a38a5428987200bab9a0ae60e3ce14a" title="Parse chunk of lines." alt="" coords="1131,385,1315,427"/>
+<area shape="rect" id="node18" href="$classhungarian_1_1PlayersNumbersReader.html#a48cc26efac9f9d9061048d4bb10f4588" title="Parse a single line from the input file into 5 numbers." alt="" coords="1363,385,1547,427"/>
+<area shape="rect" id="node19" href="$classhungarian_1_1PlayersNumbersReader.html#afe1f6b6e882edeb98ea04e33364dddb7" title="Parse numbers from a line stream into an array of five numbers." alt="" coords="1595,385,1825,427"/>
+<area shape="rect" id="node20" href="$classhungarian_1_1PlayersNumbersReader.html#a8d7b41b9d2d3defd907c84a92ea97f08" title="Fill an array of five numbers from a line stream." alt="" coords="1873,352,2084,393"/>
+<area shape="rect" id="node22" href="$classhungarian_1_1PlayersNumbersReader.html#ad54d6aaa375145a7e80e26f6789e14cf" title="Validate that the given 5 numbers are unique." alt="" coords="1887,417,2071,459"/>
+<area shape="rect" id="node21" href="$classhungarian_1_1PlayersNumbersReader.html#ab82132137ac0b4c3a66ab9167bad56b0" title="Validate a single integer value is within allowed range." alt="" coords="2132,352,2316,393"/>
+<area shape="rect" id="node25" href="$classhungarian_1_1ConsoleReader.html#aec1271ac62f8e173cbbb7f285b1f96cf" title="Lottery pick numbers." alt="" coords="421,332,595,373"/>
+<area shape="rect" id="node26" href="$classhungarian_1_1ConsoleWriter.html#a7b2ae99e5e3945b7206e9d3dbdf3afec" title="Prints the four result fields separated by spaces and newline to stdout." alt="" coords="424,397,592,439"/>
+<area shape="rect" id="node27" href="$classhungarian_1_1ConsoleReader.html#a51a3b152e4e517dc05ef469f612a0096" title="Reads exactly 5 numbers from stdin into internal fields." alt="" coords="421,473,595,515"/>
+<area shape="rect" id="node28" href="$console__reader_8cpp.html#a450856033dddb33e3d5c6fe4926bf2f0" title="Converts and validates temporary read numbers into uint8_t array." alt="" coords="666,451,833,478"/>
+<area shape="rect" id="node30" href="$console__reader_8cpp.html#afa91ce07ef60325e4581b3697e55616f" title="Reads exactly 5 numbers from stdin into a temporary array." alt="" coords="653,502,846,529"/>
+<area shape="rect" id="node31" href="$classhungarian_1_1ConsoleReader.html#a617710ceca2ce16e9ab68a075c68841a" title="Assign lottery pick values to member variable." alt="" coords="662,553,837,595"/>
+<area shape="rect" id="node29" href="$console__reader_8cpp.html#a1db810cb4e3a101c473158aef51094d8" title="Global validator for pick values." alt="" coords="929,451,1053,478"/>
+</map>

@@ -30,7 +30,6 @@ private:
     std::array<uint8_t,5> m_lotteryPick;
 
     /**
-     * @internal
      * @brief Assign lottery pick values to member variable.
      *
      * Small helper used to assign values to member variable after validation.

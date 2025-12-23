@@ -1,0 +1,6 @@
+<map id="hungarian::CachedLotteryProcessor::computeChunkSize" name="hungarian::CachedLotteryProcessor::computeChunkSize">
+<area shape="rect" id="node1" title="Compute Chunk Size for Threaded Work." alt="" coords="628,5,831,47"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a62a5e24c967334d0f0451474bd4f9eeb" title="Pre&#45;compute combinations in parallel using multiple threads." alt="" coords="365,5,580,47"/>
+<area shape="rect" id="node3" href="$classhungarian_1_1CachedLotteryProcessor.html#a17387a408ae663691168bd7cfcd2f819" title="Pre&#45;compute winners by populating the cache with player combinations." alt="" coords="108,5,317,47"/>
+<area shape="rect" id="node4" href="$test__cached__processor_8cpp.html#a24a0af34438cd0d8a445cef4065ff89d" title=" " alt="" coords="5,13,60,39"/>
+</map>

@@ -7,7 +7,6 @@
 using namespace hungarian;
 
 /**
- * @internal
  * @brief Global validator for pick values.
  * 
  * Validates that a given integer is within the allowed range [1,90].
@@ -24,7 +23,6 @@ static void validatePickValue(int value) {
 }
 
 /**
- * @internal
  * @brief Reads exactly 5 numbers from stdin into a temporary array.
  * 
  * This helper reads 5 integers from standard input and returns them
@@ -45,7 +43,6 @@ static std::array<int,5> readTempNumbersFromStdin() {
 }
 
 /**
- * @internal
  * @brief Converts and validates temporary read numbers into uint8_t array.
  * 
  * This helper takes a temporary array of integers, validates each value,

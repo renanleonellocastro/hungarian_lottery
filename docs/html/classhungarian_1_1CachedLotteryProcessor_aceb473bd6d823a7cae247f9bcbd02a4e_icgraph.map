@@ -1,0 +1,5 @@
+<map id="hungarian::CachedLotteryProcessor::mergeLocalCaches" name="hungarian::CachedLotteryProcessor::mergeLocalCaches">
+<area shape="rect" id="node1" title="Merge local caches from multiple threads into the main cache." alt="" coords="365,5,565,47"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a17387a408ae663691168bd7cfcd2f819" title="Pre&#45;compute winners by populating the cache with player combinations." alt="" coords="108,5,317,47"/>
+<area shape="rect" id="node3" href="$test__cached__processor_8cpp.html#a24a0af34438cd0d8a445cef4065ff89d" title=" " alt="" coords="5,13,60,39"/>
+</map>

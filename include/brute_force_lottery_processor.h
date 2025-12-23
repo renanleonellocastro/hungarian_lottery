@@ -49,7 +49,6 @@ private:
     std::vector<std::array<uint8_t,5>> m_container{};
 
     /**
-     * @internal
      * @brief Count how many numbers from `player` exist in `pick`.
      *
      * Simple helper used by the brute-force implementation. This performs a
@@ -63,7 +62,6 @@ private:
     static int countMatches(const std::array<uint8_t,5>& pick, const std::array<uint8_t,5>& player);
 
     /**
-     * @internal
      * @brief Update Winners struct based on number of matches.
      *
      * Increments the appropriate field in the Winners struct based on the

@@ -70,7 +70,6 @@ private:
     Cache m_cache;
 
     /**
-     * @internal
      * @brief Initializes the cache with all possible combinations available in the lottery.
      * 
      * This method is called during preComputeWinners to set up the cache structure.
@@ -80,7 +79,6 @@ private:
     void initializeCache();
 
     /**
-     * @internal
      * @brief Clears the cache of all stored combinations and counts.
      * 
      * This method resets the cache to an empty state.
@@ -88,7 +86,6 @@ private:
     void clearCache();
 
     /**
-     * @internal
      * @brief Reserves space in the cache for all possible combinations.
      * 
      * This method pre-allocates space in the cache to optimize performance
@@ -109,7 +106,6 @@ private:
     std::vector<HashKey> generateEncodedCombinationKeys(const std::array<uint8_t,5>& pick) const;
 
     /**
-     * @internal
      * @brief Counts how many players have the exact matching combination represented by the key.
      * 
      * This method looks up the cache for the given encoded key and returns the count of players
@@ -121,7 +117,6 @@ private:
     uint32_t countMatches(const std::array<uint8_t,5>& key) const;
 
     /**
-     * @internal
      * @brief Generate all combinations, when the order does not matter, of a given size from the provided numbers.
      *
      * This helper generates all combinations of `combinationSize`, when the order does not matter, from
@@ -142,7 +137,6 @@ private:
     std::vector<std::array<uint8_t,5>> generateCombinationsOf4(const std::array<uint8_t,5>& numbers) const;
 
     /**
-     * @internal
      * @brief Compute winners with two matching numbers.
      * 
      * This method updates the winners struct by counting players with exactly two matching numbers.
@@ -152,7 +146,6 @@ private:
     void computeWinnersWithTwoMatchingNumbers(std::array<uint8_t,5>& lotteryNumbers, Winners &winners) const;
 
     /**
-     * @internal
      * @brief Compute winners with three matching numbers.
      * 
      * This method updates the winners struct by counting players with exactly three matching numbers.
@@ -162,7 +155,6 @@ private:
     void computeWinnersWithThreeMatchingNumbers(std::array<uint8_t,5>& lotteryNumbers, Winners &winners) const;
 
     /**
-     * @internal
      * @brief Compute winners with four matching numbers.
      * 
      * This method updates the winners struct by counting players with exactly four matching numbers.
@@ -172,7 +164,6 @@ private:
     void computeWinnersWithFourMatchingNumbers(std::array<uint8_t,5>& lotteryNumbers, Winners &winners) const;
 
     /**
-     * @internal
      * @brief Compute winners with five matching numbers.
      * 
      * This method updates the winners struct by counting players with exactly five matching numbers.
@@ -182,7 +173,6 @@ private:
     void computeWinnersWithFiveMatchingNumbers(std::array<uint8_t,5>& lotteryNumbers, Winners &winners) const;
 
     /**
-     * @internal
      * @brief Determine Thread Count for Pre-computation.
      * 
      * This method calculates the optimal number of threads to use for pre-computation
@@ -194,7 +184,6 @@ private:
     size_t determineThreadCount(size_t workSize) const;
 
     /**
-     * @internal
      * @brief Compute Chunk Size for Threaded Work.
      * 
      * This method calculates the size of each chunk of work to be assigned to threads
@@ -207,7 +196,6 @@ private:
     size_t computeChunkSize(size_t total, size_t threads) const;
 
     /**
-     * @internal
      * @brief Pre-compute combinations in parallel using multiple threads.
      * 
      * This method divides the work of pre-computing combinations among multiple threads
@@ -220,7 +208,6 @@ private:
     std::vector<Cache> preComputeInParallel(const std::vector<std::array<uint8_t,5>>& players, size_t threadCount);
 
     /**
-     * @internal
      * @brief Process a chunk of players to update the cache.
      * 
      * This method processes a subset of players' numbers and updates a local cache
@@ -234,7 +221,6 @@ private:
     Cache processPlayerChunk(const std::vector<std::array<uint8_t,5>>& players, size_t begin, size_t end) const;
 
     /**
-     * @internal
      * @brief Merge local caches from multiple threads into the main cache.
      * 
      * This method combines the results from multiple local caches computed by different threads
@@ -245,7 +231,6 @@ private:
     void mergeLocalCaches(std::vector<Cache>& locals);
 
     /**
-     * @internal
      * @brief Sort and Encode a combination of numbers into a HashKey.
      * 
      * This method takes an array of numbers, sorts and encodes it into a single uint64_t key.
@@ -257,7 +242,6 @@ private:
     static HashKey getHashKeyFromNumbersCombination(const std::array<uint8_t,5>& combinationOfNumbers);
 
     /**
-     * @internal
      * @brief Encode a sorted array of numbers into a HashKey.
      * 
      * This method encodes a sorted array of numbers into a single uint64_t key.

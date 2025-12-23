@@ -1,0 +1,5 @@
+<map id="hungarian::CachedLotteryProcessor::computeWinnersWithFiveMatchingNumbers" name="hungarian::CachedLotteryProcessor::computeWinnersWithFiveMatchingNumbers">
+<area shape="rect" id="node1" title="Compute winners with five matching numbers." alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#aad59113b0f276301cb8e3c76482f6a10" title="Counts how many players have the exact matching combination represented by the key." alt="" coords="268,13,439,54"/>
+<area shape="rect" id="node3" href="$classhungarian_1_1CachedLotteryProcessor.html#a680d222b2c863f145b81c16ac9c80222" title="Encode a sorted array of numbers into a HashKey." alt="" coords="487,13,657,54"/>
+</map>

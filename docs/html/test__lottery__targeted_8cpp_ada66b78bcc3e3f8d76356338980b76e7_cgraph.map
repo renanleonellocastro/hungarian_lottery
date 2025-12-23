@@ -1,0 +1,23 @@
+<map id="TEST" name="TEST">
+<area shape="rect" id="node1" title=" " alt="" coords="5,143,60,170"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1Lottery.html#a95ed3a6aae786802a3553c18c1dbb709" title="Initialize a new Lottery with new players playing the game." alt="" coords="108,136,235,177"/>
+<area shape="rect" id="node3" href="$classhungarian_1_1Lottery.html#aff23e980c8440cfa2be83ce8b8033445" title="Instantiate the lottery processor based on the selected mode." alt="" coords="300,5,449,47"/>
+<area shape="rect" id="node4" href="$classhungarian_1_1Lottery.html#ae7ca5baa481ecd5f2f078dfa393b58c0" title="Parse the input arguments." alt="" coords="311,71,438,112"/>
+<area shape="rect" id="node6" href="$classhungarian_1_1PlayersNumbersReader.html#af9c18921c4c071acf06beec412fbd5f9" title="Access the parsed players numbers as vector of 5&#45;length vectors." alt="" coords="283,136,467,177"/>
+<area shape="rect" id="node7" href="$classhungarian_1_1ConsoleWriter.html#ac4c61b207807c7db0710b7f111fd9c0f" title="Prints READY and newline to stdout." alt="" coords="291,201,459,243"/>
+<area shape="rect" id="node8" href="$classhungarian_1_1PlayersNumbersReader.html#a5079143e23fa48527a8494a4c98969f0" title="Read file and populate internal structure." alt="" coords="283,267,467,308"/>
+<area shape="rect" id="node5" href="$classhungarian_1_1ConsoleWriter.html#a95eb3bbeb8d0331de9c79eb619b34071" title="Prints help message to stdout." alt="" coords="532,71,700,112"/>
+<area shape="rect" id="node9" href="$classhungarian_1_1PlayersNumbersReader.html#a1e5b36f8089773ad910b7b0d58de1ff4" title="Determine optimal thread count for parallel processing." alt="" coords="515,168,717,209"/>
+<area shape="rect" id="node10" href="$classhungarian_1_1PlayersNumbersReader.html#abd2537fcacf32ba4bb751c9f6506df05" title="Merge parsed chunks into the main players vector." alt="" coords="519,233,713,275"/>
+<area shape="rect" id="node11" href="$classhungarian_1_1PlayersNumbersReader.html#a37ddd8c55c15a5e87046ecaead91b632" title="Parse lines in parallel using multiple threads." alt="" coords="521,299,711,340"/>
+<area shape="rect" id="node21" href="$classhungarian_1_1PlayersNumbersReader.html#a4f3266bc0a07a042f381fae229b2333e" title="Read all lines from the specified file." alt="" coords="524,364,708,405"/>
+<area shape="rect" id="node12" href="$classhungarian_1_1PlayersNumbersReader.html#a998367581f4e6a7eca2da1453a2b3a6d" title="Collect results from multiple parsing tasks." alt="" coords="765,233,949,275"/>
+<area shape="rect" id="node13" href="$classhungarian_1_1PlayersNumbersReader.html#aca4a88f64cf2cffc62c95df76e2ae650" title="Compute chunk size for dividing work among threads." alt="" coords="765,299,949,340"/>
+<area shape="rect" id="node14" href="$classhungarian_1_1PlayersNumbersReader.html#a635c879eaae85b037aa4ffd22eb99146" title="Spawn a thread to parse a chunk of lines." alt="" coords="765,364,949,405"/>
+<area shape="rect" id="node15" href="$classhungarian_1_1PlayersNumbersReader.html#a3a38a5428987200bab9a0ae60e3ce14a" title="Parse chunk of lines." alt="" coords="997,364,1181,405"/>
+<area shape="rect" id="node16" href="$classhungarian_1_1PlayersNumbersReader.html#a48cc26efac9f9d9061048d4bb10f4588" title="Parse a single line from the input file into 5 numbers." alt="" coords="1229,364,1413,405"/>
+<area shape="rect" id="node17" href="$classhungarian_1_1PlayersNumbersReader.html#afe1f6b6e882edeb98ea04e33364dddb7" title="Parse numbers from a line stream into an array of five numbers." alt="" coords="1461,364,1692,405"/>
+<area shape="rect" id="node18" href="$classhungarian_1_1PlayersNumbersReader.html#a8d7b41b9d2d3defd907c84a92ea97f08" title="Fill an array of five numbers from a line stream." alt="" coords="1740,331,1951,372"/>
+<area shape="rect" id="node20" href="$classhungarian_1_1PlayersNumbersReader.html#ad54d6aaa375145a7e80e26f6789e14cf" title="Validate that the given 5 numbers are unique." alt="" coords="1753,396,1937,437"/>
+<area shape="rect" id="node19" href="$classhungarian_1_1PlayersNumbersReader.html#ab82132137ac0b4c3a66ab9167bad56b0" title="Validate a single integer value is within allowed range." alt="" coords="1999,331,2183,372"/>
+</map>

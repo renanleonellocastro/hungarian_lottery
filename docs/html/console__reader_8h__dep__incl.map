@@ -1,0 +1,12 @@
+<map id="console_reader.h" name="console_reader.h">
+<area shape="rect" id="node1" title="Read lottery pick from stdin." alt="" coords="226,5,347,32"/>
+<area shape="rect" id="node2" href="$console__reader_8cpp.html" title=" " alt="" coords="93,80,227,107"/>
+<area shape="rect" id="node3" href="$lottery_8h.html" title=" " alt="" coords="252,80,321,107"/>
+<area shape="rect" id="node10" href="$test__console__reader_8cpp.html" title=" " alt="" coords="346,80,510,107"/>
+<area shape="rect" id="node4" href="$lottery_8cpp.html" title=" " alt="" coords="5,155,88,181"/>
+<area shape="rect" id="node5" href="$main_8cpp.html" title=" " alt="" coords="112,155,187,181"/>
+<area shape="rect" id="node6" href="$integration__common_8h.html" title=" " alt="" coords="211,155,362,181"/>
+<area shape="rect" id="node8" href="$test__lottery_8cpp.html" title=" " alt="" coords="387,155,499,181"/>
+<area shape="rect" id="node9" href="$test__lottery__targeted_8cpp.html" title=" " alt="" coords="523,155,690,181"/>
+<area shape="rect" id="node7" href="$test__integration__01_8cpp.html" title=" " alt="" coords="208,229,365,256"/>
+</map>

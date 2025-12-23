@@ -1,0 +1,20 @@
+<map id="test_lottery.cpp" name="test_lottery.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="189,5,301,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,100,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="125,80,191,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="216,80,273,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="257,229,326,256"/>
+<area shape="rect" id="node6" href="$lottery_8h.html" title=" " alt="" coords="606,80,675,107"/>
+<area shape="rect" id="node7" href="$console__reader_8h.html" title="Read lottery pick from stdin." alt="" coords="879,155,1000,181"/>
+<area shape="rect" id="node11" href="$console__writer_8h.html" title="Helpers to write responses to stdout." alt="" coords="737,155,854,181"/>
+<area shape="rect" id="node14" href="$i__lottery__processor_8h.html" title="Interface for lottery processors." alt="" coords="569,155,713,181"/>
+<area shape="rect" id="node16" href="$players__numbers__reader_8h.html" title="Reader for players&#39; numbers files." alt="" coords="369,155,545,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="968,229,1039,256"/>
+<area shape="rect" id="node9" title=" " alt="" coords="642,229,693,256"/>
+<area shape="rect" id="node10" title=" " alt="" coords="726,304,787,331"/>
+<area shape="rect" id="node12" title=" " alt="" coords="821,229,893,256"/>
+<area shape="rect" id="node13" href="$winners_8h.html" title="Winners struct for lottery results." alt="" coords="717,229,796,256"/>
+<area shape="rect" id="node15" title=" " alt="" coords="560,229,617,256"/>
+<area shape="rect" id="node17" title=" " alt="" coords="429,229,484,256"/>
+<area shape="rect" id="node18" title=" " alt="" coords="351,229,405,256"/>
+</map>

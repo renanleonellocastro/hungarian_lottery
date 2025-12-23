@@ -1,0 +1,5 @@
+<map id="hungarian::CachedLotteryProcessor::computeWinnersWithFiveMatchingNumbers" name="hungarian::CachedLotteryProcessor::computeWinnersWithFiveMatchingNumbers">
+<area shape="rect" id="node1" title="Compute winners with five matching numbers." alt="" coords="344,5,559,61"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a76fb0ee815dc6c7135692c69880e3048" title="Compute the winners for a given pick using the pre&#45;computed cache." alt="" coords="108,13,296,54"/>
+<area shape="rect" id="node3" href="$test__cached__processor_8cpp.html#a24a0af34438cd0d8a445cef4065ff89d" title=" " alt="" coords="5,20,60,47"/>
+</map>

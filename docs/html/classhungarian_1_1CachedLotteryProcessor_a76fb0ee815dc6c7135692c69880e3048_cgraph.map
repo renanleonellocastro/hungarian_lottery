@@ -1,0 +1,14 @@
+<map id="hungarian::CachedLotteryProcessor::computeWinners" name="hungarian::CachedLotteryProcessor::computeWinners">
+<area shape="rect" id="node1" title="Compute the winners for a given pick using the pre&#45;computed cache." alt="" coords="5,173,193,214"/>
+<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a11c7dcc0262006a34cce51dbcbc7ccf0" title="Compute winners with five matching numbers." alt="" coords="241,5,456,61"/>
+<area shape="rect" id="node5" href="$classhungarian_1_1CachedLotteryProcessor.html#a022697f568ae2478b9f671c0c749711d" title="Compute winners with four matching numbers." alt="" coords="241,85,456,141"/>
+<area shape="rect" id="node10" href="$classhungarian_1_1CachedLotteryProcessor.html#aa584651f73b41af87a2a3d8affdd8b75" title="Compute winners with three matching numbers." alt="" coords="241,165,456,221"/>
+<area shape="rect" id="node11" href="$classhungarian_1_1CachedLotteryProcessor.html#a7cd38775a28fa4370ba0b7607853549f" title="Compute winners with two matching numbers." alt="" coords="241,245,456,301"/>
+<area shape="rect" id="node12" href="$test__cached__processor_8cpp.html#a2d1cac7272265bc440a4527324e32f8e" title=" " alt="" coords="325,325,372,352"/>
+<area shape="rect" id="node3" href="$classhungarian_1_1CachedLotteryProcessor.html#aad59113b0f276301cb8e3c76482f6a10" title="Counts how many players have the exact matching combination represented by the key." alt="" coords="528,93,699,134"/>
+<area shape="rect" id="node4" href="$classhungarian_1_1CachedLotteryProcessor.html#a680d222b2c863f145b81c16ac9c80222" title="Encode a sorted array of numbers into a HashKey." alt="" coords="805,79,976,121"/>
+<area shape="rect" id="node6" href="$classhungarian_1_1CachedLotteryProcessor.html#a4d642b2270abf81c139c7b877453b2d4" title="Generate all combinations, when the order does not matter, of a given size from the provided numbers." alt="" coords="504,185,723,226"/>
+<area shape="rect" id="node7" href="$classhungarian_1_1CachedLotteryProcessor.html#a9fdec5cc8ea6da46fa09059d2f601c72" title="Internal helpers for specific combination sizes." alt="" coords="771,145,1011,186"/>
+<area shape="rect" id="node8" href="$classhungarian_1_1CachedLotteryProcessor.html#a6837eb67ccfbd86ac8bc459819e839a5" title=" " alt="" coords="771,210,1011,251"/>
+<area shape="rect" id="node9" href="$classhungarian_1_1CachedLotteryProcessor.html#a9e03c1e2a4108afe9a11d110e2d9a088" title=" " alt="" coords="771,275,1011,317"/>
+</map>
