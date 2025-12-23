@@ -4,9 +4,10 @@
  */
 #pragma once
 
+#include <array>
 #include <string>
 #include <vector>
-#include <array>
+#include <future>
 #include <sstream>
 #include <cstdint>
 
@@ -95,6 +96,94 @@ private:
      * @param lineNumber Line number for error messages.
      */
     void validateUnique(const std::array<uint8_t,5>& numbers, size_t lineNumber) const;
+
+    /**
+     * @brief Read all lines from the specified file.
+     *
+     * @param filepath Path to input file.
+     * @return Vector of lines read from the file.
+     * @throws std::runtime_error if file cannot be opened.
+     */
+    std::vector<std::string> readLinesFromFile(const std::string& filepath) const;
+
+    /**
+     * @brief Determine optimal thread count for parallel processing.
+     *
+     * Based on the number of lines to process and hardware concurrency.
+     *
+     * @param lineCount Total number of lines to process.
+     * @return Number of threads to use.
+     */
+    size_t determineThreadCount(size_t lineCount) const;
+
+    /**
+     * @brief Parse lines in parallel using multiple threads.
+     *
+     * Divides the input lines into chunks and processes each chunk
+     * in a separate thread.
+     *
+     * @param lines Input lines to parse.
+     * @param threadCount Number of threads to use.
+     * @return Vector of parsed chunks from each thread.
+     */
+    std::vector<std::vector<std::array<uint8_t,5>>> parseLinesInParallel(const std::vector<std::string>& lines, size_t threadCount) const;
+
+    /**
+     * @brief Compute chunk size for dividing work among threads.
+     * 
+     * Given total lines and thread count, computes how many lines
+     * each thread should process.
+     * 
+     * @param totalLines Total number of lines to process.
+     * @param threadCount Number of threads to use.
+     * @return Computed chunk size.
+     */
+    size_t computeChunkSize(size_t totalLines, size_t threadCount) const;
+
+    /**
+     * @brief Spawn a thread to parse a chunk of lines.
+     * 
+     * Helper to encapsulate thread creation and parsing logic.
+     * 
+     * @param lines Input lines to parse.
+     * @param taskIndex Index of the chunk to process.
+     * @param chunkSize Number of lines per chunk.
+     * @return Future holding parsed results from the thread.
+     */
+    std::future<std::vector<std::array<uint8_t,5>>> spawnParseTask(const std::vector<std::string>& lines, size_t taskIndex, size_t chunkSize) const;
+
+    /**
+     * @brief Parse chunk of lines.
+     * 
+     * Processes a subset of lines and returns parsed results.
+     * 
+     * @param lines Input lines to parse.
+     * @param taskIndex Index of the chunk to process.
+     * @param chunkSize Number of lines per chunk.
+     * @return Vector of parsed results from the chunk.
+     */
+    std::vector<std::array<uint8_t,5>> parseChunk(const std::vector<std::string>& lines, size_t taskIndex, size_t chunkSize) const;
+
+    /**
+     * @brief Collect results from multiple parsing tasks.
+     * 
+     * Gathers parsed results from all spawned threads.
+     * 
+     * @param tasks Vector of futures holding parsing results.
+     * @return Vector of all parsed results.
+     */
+    std::vector<std::vector<std::array<uint8_t,5>>> collectTaskResults(std::vector<std::future<std::vector<std::array<uint8_t,5>>>>& tasks) const;
+
+    /**
+     * @brief Merge parsed chunks into the main players vector.
+     * 
+     * Combines results from multiple threads into a single contiguous
+     * vector of players' numbers.
+     * 
+     * @param chunks Vector of parsed chunks from each thread.
+     * @param totalLines Total number of lines expected.
+     */
+    void mergeParsedChunks(std::vector<std::vector<std::array<uint8_t,5>>>& chunks, size_t totalLines);
 };
 
 } // namespace hungarian
