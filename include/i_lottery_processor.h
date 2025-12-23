@@ -22,7 +22,23 @@ class ILotteryProcessor {
 public:
     virtual ~ILotteryProcessor() = default;
 
-    virtual void preComputeWinners(const std::vector<std::vector<uint8_t>>& players) = 0;
+    /**
+     * @brief Pre-compute winners for a set of players.
+     * 
+     * This virtual method allows derived classes to implement
+     * pre-computation logic specific to their internal data structures.
+     * @param players A vector of players' numbers, each represented as an array of 5 uint8_t values.
+     */
+    virtual void preComputeWinners(const std::vector<std::array<uint8_t,5>>& players) = 0;
+
+    /**
+     * @brief Compute winners for a given pick.
+     * 
+     * This virtual method allows derived classes to implement
+     * winner computation logic specific to their internal data structures.
+     * @param pick An array of 5 uint8_t values representing the lottery pick.
+     * @return A Winners struct containing the count of winners by category.
+     */
     virtual Winners computeWinners(const std::array<uint8_t,5>& pick) const = 0;
 };
 

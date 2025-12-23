@@ -5,9 +5,9 @@
 using namespace hungarian;
 
 TEST(CachedProcessorHelpers, GenerateCombinationsInvalidSizeThrows) {
-    std::unique_ptr<ILotteryProcessor> p = std::make_unique<CachedLotteryProcessor>();
-    ASSERT_TRUE(p);
-    auto cached = dynamic_cast<CachedLotteryProcessor*>(p.get());
+    std::unique_ptr<ILotteryProcessor> cachedLotteryProcessor = std::make_unique<CachedLotteryProcessor>();
+    ASSERT_TRUE(cachedLotteryProcessor);
+    auto cached = dynamic_cast<CachedLotteryProcessor*>(cachedLotteryProcessor.get());
     ASSERT_NE(cached, nullptr);
 
     std::array<uint8_t,5> nums = {1,2,3,4,5};
@@ -16,9 +16,9 @@ TEST(CachedProcessorHelpers, GenerateCombinationsInvalidSizeThrows) {
 }
 
 TEST(CachedProcessorHelpers, PreProcessPlayerAndCountMatches) {
-    std::unique_ptr<ILotteryProcessor> p = std::make_unique<CachedLotteryProcessor>();
-    ASSERT_TRUE(p);
-    auto cached = dynamic_cast<CachedLotteryProcessor*>(p.get());
+    std::unique_ptr<ILotteryProcessor> cachedLotteryProcessor = std::make_unique<CachedLotteryProcessor>();
+    ASSERT_TRUE(cachedLotteryProcessor);
+    auto cached = dynamic_cast<CachedLotteryProcessor*>(cachedLotteryProcessor.get());
     ASSERT_NE(cached, nullptr);
 
     std::array<uint8_t,5> pick = {5,4,3,2,1};
@@ -28,5 +28,5 @@ TEST(CachedProcessorHelpers, PreProcessPlayerAndCountMatches) {
     std::array<uint8_t,5> sorted = pick;
     std::sort(sorted.begin(), sorted.end());
     uint32_t cnt = cached->test_countMatches(sorted);
-    EXPECT_GE(cnt, 1u);
+    EXPECT_GE(cnt, 1);
 }

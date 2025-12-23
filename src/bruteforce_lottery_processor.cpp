@@ -3,7 +3,7 @@
 using namespace hungarian;
 
 
-void BruteForceLotteryProcessor::preComputeWinners(const std::vector<std::vector<uint8_t>>& players) {
+void BruteForceLotteryProcessor::preComputeWinners(const std::vector<std::array<uint8_t,5>>& players) {
     m_container = players;
 }
 
@@ -18,7 +18,7 @@ Winners BruteForceLotteryProcessor::computeWinners(const std::array<uint8_t,5>& 
     return w;
 }
 
-int BruteForceLotteryProcessor::countMatches(const std::array<uint8_t,5>& pick, const std::vector<uint8_t>& player) {
+int BruteForceLotteryProcessor::countMatches(const std::array<uint8_t,5>& pick, const std::array<uint8_t,5>& player) {
     int matches = 0;
 
     for (uint8_t num : player) {

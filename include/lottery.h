@@ -81,7 +81,7 @@ private:
     std::string parseArguments(int argc, char** argv) const;
 
     /**
-     * @brief Instantiat the lottery processor based on the selected mode.
+     * @brief Instantiate the lottery processor based on the selected mode.
      * @param mode Lottery processing mode.
      */
     void instantiateProcessor(LotteryMode mode);

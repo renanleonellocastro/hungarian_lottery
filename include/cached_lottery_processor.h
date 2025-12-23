@@ -22,7 +22,8 @@ using HashKey = uint64_t;
 /**
  * @brief Cached processor that indexes all possible loterry combinations using a hash key.
  *
- * The cache maps an encoded sorted combination -> count of players having that combination.
+ * The cache maps encoded combination keys to counts of players having those combinations.
+ * This allows for efficient computation of winners by looking up pre-computed counts.
  */
 class CachedLotteryProcessor : public ILotteryProcessor {
 public:
@@ -34,7 +35,7 @@ public:
      * generating all possible combinations for each player and updating the cache
      * with the counts of players having those combinations.
      */
-    void preComputeWinners(const std::vector<std::vector<uint8_t>>& players) override;
+    void preComputeWinners(const std::vector<std::array<uint8_t,5>>& players) override;
 
     /**
      * @brief Compute the winners for a given pick using the pre-computed cache.
@@ -54,7 +55,7 @@ public:
     HashKey test_encodeKey(const std::array<uint8_t,5>& sortedNumbers) const { return encodeKey(sortedNumbers); }
     uint32_t test_countMatches(const std::array<uint8_t,5>& key) const { return countMatches(key); }
     void test_preProcessPlayer(const std::array<uint8_t,5>& pick) { preProcessPlayer(pick); }
-    static HashKey test_getHashKeyFromNumbersCombination(const std::array<uint8_t,5>& combo) { return getHashKeyFromNumbersCombination(combo); }
+    static HashKey test_getHashKeyFromNumbersCombination(const std::array<uint8_t,5>& combination) { return getHashKeyFromNumbersCombination(combination); }
 #endif
 
 private:
@@ -71,9 +72,7 @@ private:
      * @brief Initializes the cache with all possible combinations available in the lottery.
      * 
      * This method is called during preComputeWinners to set up the cache structure.
-     * It generates all possible combinations of numbers and initializes their counts to zero.
-     * The combinations are all based that the numbers just varies from 1 to 90 and can't be repeated
-     * in a player's pick. There will be combinations of 5 numbers, 4 numbers, 3 numbers and 2 numbers.
+     * It clears any existing data and reserves space for expected combinations.
      * 
      */
     void initializeCache();
@@ -105,6 +104,17 @@ private:
      * @param pick The player's selected numbers as an array of 5 uint8_t values.
      */
     void preProcessPlayer(const std::array<uint8_t,5>& pick);
+    /**
+     * @brief Generate encoded keys for all combinations of a player's numbers.
+     *
+     * Helper that builds all combinations (5,4,3,2) for a sorted player pick and
+     * returns their encoded keys so the cache can be updated. Keeps
+     * `preProcessPlayer` short and focused.
+     *
+     * @param pick Player's numbers (must be 5 elements).
+     * @return std::vector<HashKey> Encoded keys for combinations.
+     */
+    std::vector<HashKey> generateEncodedCombinationKeys(const std::array<uint8_t,5>& pick) const;
 
     /**
      * @internal
@@ -131,6 +141,13 @@ private:
      * It uses "0" for unused positions.
      */
     std::vector<std::array<uint8_t,5>> generateCombinations(const std::array<uint8_t,5>& numbers, int combinationSize) const;
+
+    /**
+     * @brief Internal helpers for specific combination sizes.
+     */
+    std::vector<std::array<uint8_t,5>> generateCombinationsOf2(const std::array<uint8_t,5>& numbers) const;
+    std::vector<std::array<uint8_t,5>> generateCombinationsOf3(const std::array<uint8_t,5>& numbers) const;
+    std::vector<std::array<uint8_t,5>> generateCombinationsOf4(const std::array<uint8_t,5>& numbers) const;
 
     /**
      * @internal

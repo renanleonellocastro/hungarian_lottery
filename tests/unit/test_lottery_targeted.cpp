@@ -7,14 +7,13 @@
 using namespace hungarian;
 
 TEST(LotteryTargeted, InitializeInvalidArgsThrows) {
-    Lottery l;
+    Lottery lottery;
     char* argv[] = { (char*)"prog", nullptr };
-    EXPECT_THROW(l.initialize(1, argv, LotteryMode::BruteForce), std::runtime_error);
+    EXPECT_THROW(lottery.initialize(1, argv, LotteryMode::BruteForce), std::runtime_error);
 }
 
 TEST(LotteryTargeted, InstantiateProcessorDefaultThrows) {
-    Lottery l;
-
+    Lottery lottery;
     // create an empty temp file to act as players file
     const std::string path = "test_players_tmp.txt";
     {
@@ -25,14 +24,14 @@ TEST(LotteryTargeted, InstantiateProcessorDefaultThrows) {
     const char* args[] = { "prog", path.c_str() };
     char* argv[] = { const_cast<char*>(args[0]), const_cast<char*>(args[1]), nullptr };
 
-    EXPECT_THROW(l.initialize(2, argv, static_cast<LotteryMode>(999)), std::runtime_error);
+    EXPECT_THROW(lottery.initialize(2, argv, static_cast<LotteryMode>(999)), std::runtime_error);
 
     // cleanup
     std::remove(path.c_str());
 }
 
 TEST(LotteryTargeted, RunBruteForceHappyPathReadsPlayersAndPick) {
-    Lottery l;
+    Lottery lottery;
 
     // create a players file with one matching player
     const std::string path = "test_players_one.txt";
@@ -48,18 +47,17 @@ TEST(LotteryTargeted, RunBruteForceHappyPathReadsPlayersAndPick) {
     std::istringstream input("1 2 3 4 5\n");
     auto* old = std::cin.rdbuf(input.rdbuf());
 
-    EXPECT_NO_THROW(l.initialize(2, argv, LotteryMode::BruteForce));
-    EXPECT_NO_THROW(l.run());
+    EXPECT_NO_THROW(lottery.initialize(2, argv, LotteryMode::BruteForce));
+    EXPECT_NO_THROW(lottery.run());
     std::cin.rdbuf(old);
 
-    EXPECT_EQ(l.getNumberOfPlayers(), 1u);
-
+    EXPECT_EQ(lottery.getNumberOfPlayers(), 1);
     // cleanup
     std::remove(path.c_str());
 }
 
 TEST(LotteryTargeted, RunCachedPathConstructsProcessor) {
-    Lottery l;
+    Lottery lottery;
 
     // empty players file (no players)
     const std::string path = "test_players_empty_cached.txt";
@@ -75,8 +73,8 @@ TEST(LotteryTargeted, RunCachedPathConstructsProcessor) {
     std::istringstream input("1 2 3 4 5\n");
     auto* old = std::cin.rdbuf(input.rdbuf());
 
-    EXPECT_NO_THROW(l.initialize(2, argv, LotteryMode::Cached));
-    EXPECT_NO_THROW(l.run());
+    EXPECT_NO_THROW(lottery.initialize(2, argv, LotteryMode::Cached));
+    EXPECT_NO_THROW(lottery.run());
 
     std::cin.rdbuf(old);
     std::remove(path.c_str());

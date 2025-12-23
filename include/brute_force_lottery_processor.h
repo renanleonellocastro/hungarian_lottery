@@ -28,7 +28,7 @@ public:
      * @brief Preprocess players by storing them directly.
      * @param players Vector of players, each with their selected numbers.
      */
-    void preComputeWinners(const std::vector<std::vector<uint8_t>>& players) override;
+    void preComputeWinners(const std::vector<std::array<uint8_t,5>>& players) override;
 
     /**
      * @brief Compute winners by direct comparison of each player's numbers
@@ -46,7 +46,7 @@ private:
      * can read from it. For the brute-force processor, this is simply
      * a vector of players; for other processors it may be an index or cache structure.
      */
-    std::vector<std::vector<uint8_t>> m_container{};
+    std::vector<std::array<uint8_t,5>> m_container{};
 
     /**
      * @internal
@@ -60,7 +60,7 @@ private:
      * @param player Player's selected numbers (5 numbers).
      * @return Number of matching values (0..5).
      */
-    static int countMatches(const std::array<uint8_t,5>& pick, const std::vector<uint8_t>& player);
+    static int countMatches(const std::array<uint8_t,5>& pick, const std::array<uint8_t,5>& player);
 
     /**
      * @internal

@@ -6,6 +6,8 @@
 
 #include <string>
 #include <vector>
+#include <array>
+#include <sstream>
 #include <cstdint>
 
 namespace hungarian {
@@ -28,7 +30,7 @@ public:
     /**
      * @brief Access the parsed players numbers as vector of 5-length vectors.
      */
-    const std::vector<std::vector<uint8_t>>& players() const noexcept { return m_players; }
+    const std::vector<std::array<uint8_t,5>>& players() const noexcept { return m_players; }
 
 private:
     /**
@@ -36,7 +38,7 @@ private:
      * 
      * Each inner vector has size 5.
      */
-    std::vector<std::vector<uint8_t>> m_players;
+    std::vector<std::array<uint8_t,5>> m_players;
 
     /**
      * @brief Parse a single line from the input file into 5 numbers.
@@ -45,11 +47,31 @@ private:
      * returns a vector of 5 numbers. It throws on parse or validation errors.
      *
      * @param line Raw text line from input file.
-     * @param lineno Line number (for error reporting).
-     * @return A vector<uint8_t> containing exactly five parsed values.
+     * @param lineNumber Line number (for error reporting).
+     * @return An std::array<uint8_t,5> containing exactly five parsed values.
      * @throws std::runtime_error on parse/validation errors.
      */
-    std::vector<uint8_t> parseLine(const std::string& line, size_t lineno) const;
+    std::array<uint8_t,5> parseLine(const std::string& line, size_t lineNumber) const;
+
+    /**
+     * @brief Parse numbers from a line stream into an array of five numbers.
+     *
+     * Helper used by `parseLine` to keep the public-facing method short and
+     * focused. Validates each parsed integer and enforces exactly five values.
+     *
+     * @param lineStream Input line stream positioned at the start of data.
+     * @param lineNumber Line number for error reporting.
+     * @return std::array<uint8_t,5> Parsed five numbers.
+     */
+    std::array<uint8_t,5> parseNumbersFromStream(std::istringstream& lineStream, size_t lineNumber) const;
+
+    /**
+     * @brief Fill an array of five numbers from a line stream.
+     *
+     * Low-level helper used by `parseNumbersFromStream` to perform the
+     * extraction loop. Keeps higher-level methods short and focused.
+     */
+    std::array<uint8_t,5> fillNumbersFromStream(std::istringstream& lineStream, size_t lineNumber) const;
 
     /**
      * @brief Validate a single integer value is within allowed range.
@@ -58,10 +80,10 @@ private:
      * Logs and throws on failure.
      *
      * @param value Integer to validate.
-     * @param lineno Line number for error messages.
+     * @param lineNumber Line number for error messages.
      * @throws std::runtime_error on validation failure.
      */
-    void validateValue(int value, size_t lineno) const;
+    void validateValue(int value, size_t lineNumber) const;
 
     /**
      * @brief Validate that the given 5 numbers are unique.
@@ -70,9 +92,9 @@ private:
      * provided pick.
      *
      * @param numbers The five numbers to validate for uniqueness.
-     * @param lineno Line number for error messages.
+     * @param lineNumber Line number for error messages.
      */
-    void validateUnique(const std::vector<uint8_t>& numbers, size_t lineno) const;
+    void validateUnique(const std::array<uint8_t,5>& numbers, size_t lineNumber) const;
 };
 
 } // namespace hungarian

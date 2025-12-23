@@ -2,13 +2,11 @@
 
 using namespace hungarian;
 
-void CachedLotteryProcessor::preComputeWinners(const std::vector<std::vector<uint8_t>>& players) {
+void CachedLotteryProcessor::preComputeWinners(const std::vector<std::array<uint8_t,5>>& players) {
     initializeCache();
 
     for (const auto& player : players) {
-        std::array<uint8_t,5> playerNumbersArray{};
-        std::copy_n(player.begin(), 5, playerNumbersArray.begin());
-        preProcessPlayer(playerNumbersArray);
+        preProcessPlayer(player);
     }
 }
 
@@ -79,23 +77,30 @@ void CachedLotteryProcessor::reserveCache() {
 }
 
 void CachedLotteryProcessor::preProcessPlayer(const std::array<uint8_t,5>& pick) {
+    auto keys = generateEncodedCombinationKeys(pick);
+
+    for (auto k : keys) {
+        ++m_cache[k];
+    }
+}
+
+std::vector<HashKey> CachedLotteryProcessor::generateEncodedCombinationKeys(const std::array<uint8_t,5>& pick) const {
     std::array<uint8_t,5> playerNumbers = pick;
-    std::vector<std::array<uint8_t,5>> combinations;
+    std::vector<HashKey> keys;
 
     std::sort(playerNumbers.begin(), playerNumbers.end());
 
-    auto combinationsOf4Numbers = generateCombinations(playerNumbers, 4);
-    auto combinationsOf3Numbers = generateCombinations(playerNumbers, 3);
-    auto combinationsOf2Numbers = generateCombinations(playerNumbers, 2);
-    
-    combinations.push_back(playerNumbers);
-    combinations.insert(combinations.end(), combinationsOf4Numbers.begin(), combinationsOf4Numbers.end());
-    combinations.insert(combinations.end(), combinationsOf3Numbers.begin(), combinationsOf3Numbers.end());
-    combinations.insert(combinations.end(), combinationsOf2Numbers.begin(), combinationsOf2Numbers.end());
+    auto combinationsWith4Numbers = generateCombinations(playerNumbers, 4);
+    auto combinationsWith3Numbers = generateCombinations(playerNumbers, 3);
+    auto combinationsWith2Numbers = generateCombinations(playerNumbers, 2);
 
-    for (const auto& combination : combinations) {
-        ++m_cache[encodeKey(combination)];
-    }
+    keys.push_back(encodeKey(playerNumbers));
+
+    for (const auto &c : combinationsWith4Numbers) keys.push_back(encodeKey(c));
+    for (const auto &c : combinationsWith3Numbers) keys.push_back(encodeKey(c));
+    for (const auto &c : combinationsWith2Numbers) keys.push_back(encodeKey(c));
+
+    return keys;
 }
 
 uint32_t CachedLotteryProcessor::countMatches(const std::array<uint8_t,5>& key) const {
@@ -104,31 +109,75 @@ uint32_t CachedLotteryProcessor::countMatches(const std::array<uint8_t,5>& key) 
     return it != m_cache.end() ? it->second : 0;
 }
 
-std::vector<std::array<uint8_t, 5>> CachedLotteryProcessor::generateCombinations(const std::array<uint8_t, 5>& numbers, int combinationSize) const {
+std::vector<std::array<uint8_t,5>> CachedLotteryProcessor::generateCombinations(const std::array<uint8_t,5>& numbers, int combinationSize) const {
     if (combinationSize < 2 || combinationSize > 4) {
         throw std::invalid_argument("combinationSize must be between 2 and 4");
     }
 
-    std::vector<std::array<uint8_t, 5>> result;
-    std::array<uint8_t, 5> current{}; // all zeros
-    std::size_t depth = 0;
+    switch (combinationSize) {
+        case 2: 
+            return generateCombinationsOf2(numbers);
+        case 3:
+            return generateCombinationsOf3(numbers);
+        default:
+            return generateCombinationsOf4(numbers);
+    }
+}
 
-    const std::size_t offset = 5 - static_cast<std::size_t>(combinationSize);
+std::vector<std::array<uint8_t,5>> CachedLotteryProcessor::generateCombinationsOf2(const std::array<uint8_t,5>& numbers) const {
+    std::vector<std::array<uint8_t,5>> result;
+    std::array<uint8_t,5> combination{};
+    const size_t offset = 3; // 5 - 2
 
-    const auto backtrack = [&](auto&& self, std::size_t start) -> void {
-        if (depth == static_cast<std::size_t>(combinationSize)) {
-            result.push_back(current);
-            return;
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = i + 1; j < 5; ++j) {
+            combination[offset] = numbers[i];
+            combination[offset+1] = numbers[j];
+            result.push_back(combination);
         }
+    }
 
-        for (std::size_t i = start; i < numbers.size(); ++i) {
-            current[offset + depth++] = numbers[i];
-            self(self, i + 1);
-            current[offset + --depth] = 0; // restore
+    return result;
+}
+
+std::vector<std::array<uint8_t,5>> CachedLotteryProcessor::generateCombinationsOf3(const std::array<uint8_t,5>& numbers) const {
+    std::vector<std::array<uint8_t,5>> result;
+    std::array<uint8_t,5> combination{};
+    const size_t offset = 2; // 5 - 3
+
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = i + 1; j < 5; ++j) {
+            for (size_t k = j + 1; k < 5; ++k) {
+                combination[offset] = numbers[i];
+                combination[offset+1] = numbers[j];
+                combination[offset+2] = numbers[k];
+                result.push_back(combination);
+            }
         }
-    };
+    }
 
-    backtrack(backtrack, 0);
+    return result;
+}
+
+std::vector<std::array<uint8_t,5>> CachedLotteryProcessor::generateCombinationsOf4(const std::array<uint8_t,5>& numbers) const {
+    std::vector<std::array<uint8_t,5>> result;
+    std::array<uint8_t,5> combination{};
+    const size_t offset = 1; // 5 - 4
+
+    for (size_t i = 0; i < 5; ++i) {
+        for (size_t j = i + 1; j < 5; ++j) {
+            for (size_t k = j + 1; k < 5; ++k) {
+                for (size_t l = k + 1; l < 5; ++l) {
+                    combination[offset] = numbers[i];
+                    combination[offset+1] = numbers[j];
+                    combination[offset+2] = numbers[k];
+                    combination[offset+3] = numbers[l];
+                    result.push_back(combination);
+                }
+            }
+        }
+    }
+
     return result;
 }
 

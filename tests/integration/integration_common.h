@@ -13,7 +13,7 @@
 
 using namespace hungarian;
 
-static int players_count_for_index(int idx) {
+static int playersCountForIndex(int idx) {
     // idx in 1..100 -> linear from 1000 to 20,000,000
     const int min = 1000;
     const int max = 20000000;
@@ -21,7 +21,7 @@ static int players_count_for_index(int idx) {
     return min + (idx - 1) * step;
 }
 
-static void write_line(std::ofstream& ofs, const std::array<int,5>& arr) {
+static void writeLine(std::ofstream& ofs, const std::array<int,5>& arr) {
     ofs << arr[0] << ' ' << arr[1] << ' ' << arr[2] << ' ' << arr[3] << ' ' << arr[4] << '\n';
 }
 
@@ -64,39 +64,39 @@ static bool winner(std::ofstream& ofs, const std::array<int,5>& pick, Winners& w
         return false;
     }
 
-    write_line(ofs, arr);
+    writeLine(ofs, arr);
     return true;
 }
 
-static void non_winner(std::ofstream& ofs, const std::array<int,5>& pick, int& next_val) {
+static void looser(std::ofstream& ofs, const std::array<int,5>& pick, int& nextVal) {
     std::array<int,5> arr;
 
     for (int i=0;i<5;i++) {
-        if (next_val == 91) {
-            next_val = 6;
+        if (nextVal == 91) {
+            nextVal = 6;
         }
 
-        arr[i] = next_val;
-        ++next_val;
+        arr[i] = nextVal;
+        ++nextVal;
     }
 
-    write_line(ofs, arr);
+    writeLine(ofs, arr);
 }
 
-static void generate_sample_file(int idx, int required_n, const std::string& data_path, const std::string& expected_path) {
-    std::ofstream ofs(data_path, std::ios::trunc);
+static void generateSampleFile(int idx, int playersCount, const std::string& dataPath, const std::string& expectedPath) {
+    std::ofstream ofs(dataPath, std::ios::trunc);
     // fixed pick
     const std::array<int,5> pick = {1,2,3,4,5};
     // counts
     Winners winners{};
 
     int written = 0;
-    int next_val = 6;
+    int nextVal = 6;
 
     // fill with numbers
-    while (written < required_n) {
+    while (written < playersCount) {
         if (!winner(ofs, pick, winners)) {
-            non_winner(ofs, pick, next_val);
+            looser(ofs, pick, nextVal);
         }
 
         ++written;
@@ -105,19 +105,19 @@ static void generate_sample_file(int idx, int required_n, const std::string& dat
     ofs.close();
 
     // write expected file: format "two three four five" as ConsoleWriter prints
-    std::ofstream efs(expected_path, std::ios::trunc);
+    std::ofstream efs(expectedPath, std::ios::trunc);
     efs << winners.two << ' ' << winners.three << ' ' << winners.four << ' ' << winners.five << '\n';
     efs.close();
 }
 
-static void generate_data_files(int idx) {
-    int n = players_count_for_index(idx);
+static void generateDataFiles(int idx) {
+    int playersCount = playersCountForIndex(idx);
     std::string dir = "tests/data";
-    std::string data_file = dir + "/sample_input_file_" + std::to_string(idx) + ".txt";
-    std::string expected_file = dir + "/sample_expected_" + std::to_string(idx) + ".txt";
+    std::string dataFile = dir + "/sample_input_file_" + std::to_string(idx) + ".txt";
+    std::string expectedFile = dir + "/sample_expected_" + std::to_string(idx) + ".txt";
 
     // ensure data directory exists: tests will run from project root so create if needed
     system((std::string("mkdir -p ") + dir).c_str());
 
-    EXPECT_NO_THROW(generate_sample_file(idx, n, data_file, expected_file));
+    EXPECT_NO_THROW(generateSampleFile(idx, playersCount, dataFile, expectedFile));
 }

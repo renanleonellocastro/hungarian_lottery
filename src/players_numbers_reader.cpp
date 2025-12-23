@@ -8,47 +8,64 @@
 
 using namespace hungarian;
 
-std::vector<uint8_t> PlayersNumbersReader::parseLine(const std::string& line, size_t lineno) const {
-    std::istringstream line_stream(line);
-    std::vector<uint8_t> numbers;
-    int parsed_value;
+std::array<uint8_t,5> PlayersNumbersReader::parseLine(const std::string& line, size_t lineNumber) const {
+    std::istringstream lineStream(line);
+    return parseNumbersFromStream(lineStream, lineNumber);
+}
 
-    while (line_stream >> parsed_value) {
-        validateValue(parsed_value, lineno);
-        numbers.push_back(static_cast<uint8_t>(parsed_value));
+std::array<uint8_t,5> PlayersNumbersReader::parseNumbersFromStream(std::istringstream &lineStream, size_t lineNumber) const {
+    auto numbers = fillNumbersFromStream(lineStream, lineNumber);
+    validateUnique(numbers, lineNumber);
+    return numbers;
+}
+
+std::array<uint8_t,5> PlayersNumbersReader::fillNumbersFromStream(std::istringstream &lineStream, size_t lineNumber) const {
+    std::array<uint8_t,5> numbers{};
+    int parsedValue;
+    size_t index = 0;
+
+    while (lineStream >> parsedValue) {
+        validateValue(parsedValue, lineNumber);
+
+        if (index >= numbers.size()) {
+            LOG(ERROR) << "Invalid numbers count on line " << lineNumber << " (expected " << numbers.size() << ").";
+            throw std::runtime_error("invalid numbers count");
+        }
+
+        numbers[index++] = static_cast<uint8_t>(parsedValue);
     }
 
-    if (numbers.size() != 5) {
-        LOG(ERROR) << "Invalid numbers count on line " << lineno << " (expected 5).";
+    if (index != numbers.size()) {
+        LOG(ERROR) << "Invalid numbers count on line " << lineNumber << " (expected " << numbers.size() << ").";
         throw std::runtime_error("invalid numbers count");
     }
 
-    validateUnique(numbers, lineno);
-    return numbers; // The compiler handles this optimally (NRVO or implicit move)
+    return numbers;
 }
 
-void PlayersNumbersReader::validateValue(int value, size_t lineno) const {
+void PlayersNumbersReader::validateValue(int value, size_t lineNumber) const {
     if (value < 1 || value > 90) {
-        LOG(ERROR) << "Value out of range on line " << lineno << ": " << value;
+        LOG(ERROR) << "Value out of range on line " << lineNumber << ": " << value;
         throw std::runtime_error("value out of range");
     }
 }
 
-void PlayersNumbersReader::validateUnique(const std::vector<uint8_t>& numbers, size_t lineno) const {
-    auto sorted_numbers = numbers;
-    std::sort(sorted_numbers.begin(), sorted_numbers.end());
+void PlayersNumbersReader::validateUnique(const std::array<uint8_t,5>& numbers, size_t lineNumber) const {
+    auto sortedNumbers = numbers;
+    std::sort(sortedNumbers.begin(), sortedNumbers.end());
 
-    if (std::unique(sorted_numbers.begin(), sorted_numbers.end()) != sorted_numbers.end()) {
-        LOG(ERROR) << "Duplicate numbers found on line " << lineno;
+    if (std::unique(sortedNumbers.begin(), sortedNumbers.end()) != sortedNumbers.end()) {
+        LOG(ERROR) << "Duplicate numbers found on line " << lineNumber;
         throw std::runtime_error("duplicate numbers in pick");
     }
 }
 
 void PlayersNumbersReader::readFile(const std::string& filepath) {
     std::string line;
-    size_t lineno = 0;
-    m_players.clear();
+    size_t lineNumber = 0;
     std::ifstream ifs(filepath);
+
+    m_players.clear();
 
     if (!ifs) {
         LOG(ERROR) << "Failed to open input file: " << filepath;
@@ -56,9 +73,13 @@ void PlayersNumbersReader::readFile(const std::string& filepath) {
     }
 
     while (std::getline(ifs, line)) {
-        ++lineno;
-        if (line.empty()) continue;
-        m_players.push_back(parseLine(line, lineno));
+        ++lineNumber;
+    
+        if (line.empty()) {
+            continue;
+        }
+
+        m_players.push_back(parseLine(line, lineNumber));
     }
 
     LOG(INFO) << "Read " << m_players.size() << " players from " << filepath;

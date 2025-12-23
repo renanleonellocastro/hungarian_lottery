@@ -6,17 +6,17 @@
 using namespace hungarian;
 
 TEST(CachedProcessor, MatchesBruteForce) {
-    BruteForceLotteryProcessor bf;
-    std::vector<std::vector<uint8_t>> players = {
-        {1,2,3,4,5},
-        {1,2,3,4,6},
-        {1,2,3,7,8},
-        {1,2,9,10,11},
-        {12,13,14,15,16}
+    BruteForceLotteryProcessor bruteForceLotteryProcessor;
+    std::vector<std::array<uint8_t,5>> players = {
+        std::array<uint8_t,5>{1,2,3,4,5},
+        std::array<uint8_t,5>{1,2,3,4,6},
+        std::array<uint8_t,5>{1,2,3,7,8},
+        std::array<uint8_t,5>{1,2,9,10,11},
+        std::array<uint8_t,5>{12,13,14,15,16}
     };
-    bf.preComputeWinners(players);
+    bruteForceLotteryProcessor.preComputeWinners(players);
     std::array<uint8_t,5> pick = {1,2,3,4,5};
-    Winners wbf = bf.computeWinners(pick);
+    Winners wbf = bruteForceLotteryProcessor.computeWinners(pick);
 
     std::unique_ptr<ILotteryProcessor> cached = std::make_unique<CachedLotteryProcessor>();
     ASSERT_TRUE(cached);

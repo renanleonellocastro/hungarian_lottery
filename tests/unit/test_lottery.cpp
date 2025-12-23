@@ -7,7 +7,7 @@
 
 using namespace hungarian;
 
-static std::string make_tmp_file(const std::string& content) {
+static std::string makeTmpFile(const std::string& content) {
     std::string path = "tests_tmp_players_lottery.txt";
     std::ofstream ofs(path);
     ofs << content;
@@ -17,7 +17,7 @@ static std::string make_tmp_file(const std::string& content) {
 
 TEST(LotteryRun, EndToEndBruteForce) {
     std::string content = "1 2 3 4 5\n6 7 8 9 10\n";
-    std::string path = make_tmp_file(content);
+    std::string path = makeTmpFile(content);
 
     // Prepare argv
     char arg0[] = "prog";
@@ -33,9 +33,9 @@ TEST(LotteryRun, EndToEndBruteForce) {
     std::ostringstream oss;
     auto* oldout = std::cout.rdbuf(oss.rdbuf());
 
-    Lottery l;
-    EXPECT_NO_THROW(l.initialize(2, argv, LotteryMode::BruteForce));
-    EXPECT_NO_THROW(l.run());
+    Lottery lottery;
+    EXPECT_NO_THROW(lottery.initialize(2, argv, LotteryMode::BruteForce));
+    EXPECT_NO_THROW(lottery.run());
 
     std::cout.rdbuf(oldout);
     std::cin.rdbuf(oldin);
