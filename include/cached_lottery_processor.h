@@ -18,6 +18,7 @@
 namespace hungarian {
 
 using HashKey = uint64_t;
+using Cache = std::unordered_map<HashKey,uint32_t>;
 
 /**
  * @brief Cached processor that indexes all possible loterry combinations using a hash key.
@@ -54,7 +55,8 @@ public:
     std::vector<std::array<uint8_t,5>> test_generateCombinations(const std::array<uint8_t,5>& numbers, int size) const { return generateCombinations(numbers, size); }
     HashKey test_encodeKey(const std::array<uint8_t,5>& sortedNumbers) const { return encodeKey(sortedNumbers); }
     uint32_t test_countMatches(const std::array<uint8_t,5>& key) const { return countMatches(key); }
-    void test_preProcessPlayer(const std::array<uint8_t,5>& pick) { preProcessPlayer(pick); }
+    size_t test_determineThreadCount(size_t workSize) const { return determineThreadCount(workSize); }
+    size_t test_computeChunkSize(size_t total, size_t threads) const { return computeChunkSize(total, threads); }
     static HashKey test_getHashKeyFromNumbersCombination(const std::array<uint8_t,5>& combination) { return getHashKeyFromNumbersCombination(combination); }
 #endif
 
@@ -65,7 +67,7 @@ private:
      * The key is a uint64_t formed by encoding the sorted combination of numbers.
      * The value is the count of players having that combination.
      */
-    std::unordered_map<HashKey,uint32_t> m_cache;
+    Cache m_cache;
 
     /**
      * @internal
@@ -94,16 +96,6 @@ private:
      */
     void reserveCache();
 
-    /**
-     * @internal
-     * @brief Pre-process a player's numbers into the cache.
-     * 
-     * This method generates all combinations for the given player's numbers
-     * and updates the cache counts accordingly.
-     * 
-     * @param pick The player's selected numbers as an array of 5 uint8_t values.
-     */
-    void preProcessPlayer(const std::array<uint8_t,5>& pick);
     /**
      * @brief Generate encoded keys for all combinations of a player's numbers.
      *
@@ -188,6 +180,69 @@ private:
      * @param winners The Winners struct to update.
      */
     void computeWinnersWithFiveMatchingNumbers(std::array<uint8_t,5>& lotteryNumbers, Winners &winners) const;
+
+    /**
+     * @internal
+     * @brief Determine Thread Count for Pre-computation.
+     * 
+     * This method calculates the optimal number of threads to use for pre-computation
+     * based on the hardware concurrency available.
+     * 
+     * @param workSize The size of the work to be done.
+     * @return The number of threads to use.
+     */
+    size_t determineThreadCount(size_t workSize) const;
+
+    /**
+     * @internal
+     * @brief Compute Chunk Size for Threaded Work.
+     * 
+     * This method calculates the size of each chunk of work to be assigned to threads
+     * during pre-computation.
+     * 
+     * @param total The total size of the work.
+     * @param threads The number of threads to divide the work among.
+     * @return The size of each chunk of work.
+     */
+    size_t computeChunkSize(size_t total, size_t threads) const;
+
+    /**
+     * @internal
+     * @brief Pre-compute combinations in parallel using multiple threads.
+     * 
+     * This method divides the work of pre-computing combinations among multiple threads
+     * to improve performance on large datasets.
+     * 
+     * @param players A vector of players' numbers, each represented as an array of 5 uint8_t values.
+     * @param threadCount The number of threads to use for parallel processing.
+     * @return A vector of Cache objects, each representing the cache computed by a thread.
+     */
+    std::vector<Cache> preComputeInParallel(const std::vector<std::array<uint8_t,5>>& players, size_t threadCount);
+
+    /**
+     * @internal
+     * @brief Process a chunk of players to update the cache.
+     * 
+     * This method processes a subset of players' numbers and updates a local cache
+     * with the counts of combinations for that chunk.
+     * 
+     * @param players A vector of players' numbers, each represented as an array of 5 uint8_t values.
+     * @param begin The starting index of the chunk to process.
+     * @param end The ending index of the chunk to process.
+     * @return A Cache object representing the cache computed for the chunk.
+     */
+    Cache processPlayerChunk(const std::vector<std::array<uint8_t,5>>& players, size_t begin, size_t end) const;
+
+    /**
+     * @internal
+     * @brief Merge local caches from multiple threads into the main cache.
+     * 
+     * This method combines the results from multiple local caches computed by different threads
+     * into the main cache of the CachedLotteryProcessor.
+     * 
+     * @param locals A vector of Cache objects, each representing a local cache from a thread.
+     */
+    void mergeLocalCaches(std::vector<Cache>& locals);
 
     /**
      * @internal

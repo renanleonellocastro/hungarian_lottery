@@ -1,13 +1,21 @@
 #include "cached_lottery_processor.h"
 
+#include <thread>
+#include <future>
+
 using namespace hungarian;
 
 void CachedLotteryProcessor::preComputeWinners(const std::vector<std::array<uint8_t,5>>& players) {
     initializeCache();
 
-    for (const auto& player : players) {
-        preProcessPlayer(player);
+    const auto threadCount = determineThreadCount(players.size());
+
+    if (threadCount == 0) {
+        return;
     }
+
+    auto localCaches = preComputeInParallel(players, threadCount);
+    mergeLocalCaches(localCaches);
 }
 
 Winners CachedLotteryProcessor::computeWinners(const std::array<uint8_t,5>& pick) const {
@@ -74,14 +82,6 @@ void CachedLotteryProcessor::clearCache() {
 void CachedLotteryProcessor::reserveCache() {
     // There are C(90,2) + C(90,3) + C(90,4) + C(90,5) combinations = 4005 + 117480 + 2555190 + 43949268 ~= 47M
     m_cache.reserve(47000000);
-}
-
-void CachedLotteryProcessor::preProcessPlayer(const std::array<uint8_t,5>& pick) {
-    auto keys = generateEncodedCombinationKeys(pick);
-
-    for (auto k : keys) {
-        ++m_cache[k];
-    }
 }
 
 std::vector<HashKey> CachedLotteryProcessor::generateEncodedCombinationKeys(const std::array<uint8_t,5>& pick) const {
@@ -179,6 +179,72 @@ std::vector<std::array<uint8_t,5>> CachedLotteryProcessor::generateCombinationsO
     }
 
     return result;
+}
+
+size_t CachedLotteryProcessor::determineThreadCount(size_t workSize) const {
+    if (workSize == 0) {
+        return 0;
+    }
+
+    const auto hw = std::thread::hardware_concurrency();
+    const size_t threads = hw == 0 ? 1 : hw;
+    return std::min(threads, workSize);
+}
+
+size_t CachedLotteryProcessor::computeChunkSize(size_t total, size_t threads) const {
+    if (threads == 0) {
+        return 0;
+    }
+
+    return (total + threads - 1) / threads;
+}
+
+std::vector<Cache> CachedLotteryProcessor::preComputeInParallel(const std::vector<std::array<uint8_t,5>>& players, size_t threadCount) {
+    std::vector<Cache> results;
+    std::vector<std::future<Cache>> tasks;
+    const size_t chunkSize = computeChunkSize(players.size(), threadCount);
+
+    for (size_t i = 0; i < threadCount; ++i) {
+        const size_t begin = i * chunkSize;
+        const size_t end = std::min(begin + chunkSize, players.size());
+
+        if (begin >= end) {
+            break;
+        }
+
+        tasks.emplace_back(std::async(std::launch::async, [this, &players, begin, end] {
+                return processPlayerChunk(players, begin, end);
+            }
+        ));
+    }
+
+    for (auto& task : tasks) {
+        results.emplace_back(task.get());
+    }
+
+    return results;
+}
+
+Cache CachedLotteryProcessor::processPlayerChunk(const std::vector<std::array<uint8_t,5>>& players, size_t begin, size_t end) const {
+    Cache localCache;
+
+    for (size_t i = begin; i < end; ++i) {
+        auto keys = generateEncodedCombinationKeys(players[i]);
+
+        for (auto key : keys) {
+            ++localCache[key];
+        }
+    }
+
+    return localCache;
+}
+
+void CachedLotteryProcessor::mergeLocalCaches(std::vector<Cache>& locals) {
+    for (auto& local : locals) {
+        for (auto& [key, count] : local) {
+            m_cache[key] += count;
+        }
+    }
 }
 
 HashKey CachedLotteryProcessor::getHashKeyFromNumbersCombination(const std::array<uint8_t,5>& combinationOfNumbers) {
