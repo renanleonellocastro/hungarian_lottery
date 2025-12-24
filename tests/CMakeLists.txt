@@ -1,6 +1,4 @@
-include(FetchContent)
-FetchContent_Declare(googletest	URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
-FetchContent_MakeAvailable(googletest)
+find_package(GTest REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
@@ -12,7 +10,7 @@ set(TEST_MAIN ${CMAKE_SOURCE_DIR}/tests/gtest_main.cpp)
 
 ## Unit tests executable
 add_executable(tests_unit ${UNIT_SOURCES} ${TEST_MAIN})
-target_link_libraries(tests_unit PRIVATE gtest hungarian_lottery Threads::Threads)
+target_link_libraries(tests_unit PRIVATE GTest::gtest hungarian_lottery Threads::Threads)
 
 # Expose test-only helpers in headers when compiling the unit test binary.
 target_compile_definitions(tests_unit PRIVATE UNIT_TESTING=1)
@@ -24,7 +22,7 @@ gtest_discover_tests(tests_unit)
 
 ## Integration tests executable
 add_executable(tests_integration ${INTEGRATION_SOURCES} ${TEST_MAIN})
-target_link_libraries(tests_integration PRIVATE gtest hungarian_lottery Threads::Threads)
+target_link_libraries(tests_integration PRIVATE GTest::gtest hungarian_lottery Threads::Threads)
 
 ## Copy test data into the build tree so tests can find files at runtime.
 add_custom_target(copy_test_data
