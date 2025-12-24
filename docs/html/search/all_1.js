@@ -20,6 +20,6 @@ var searchData=
   ['console_5fwriter_2eh_22',['console_writer.h',['../console__writer_8h.html',1,'']]],
   ['consolereader_23',['ConsoleReader',['../classhungarian_1_1ConsoleReader.html',1,'hungarian']]],
   ['consolewriter_24',['ConsoleWriter',['../classhungarian_1_1ConsoleWriter.html#a684b071ed5f78bbe941817af9f1e3c4d',1,'hungarian::ConsoleWriter::ConsoleWriter()'],['../classhungarian_1_1ConsoleWriter.html',1,'hungarian::ConsoleWriter']]],
-  ['convertandvalidatetemp_25',['convertAndValidateTemp',['../console__reader_8cpp.html#a450856033dddb33e3d5c6fe4926bf2f0',1,'console_reader.cpp']]],
+  ['convertandvalidatereadline_25',['convertAndValidateReadLine',['../console__reader_8cpp.html#a9aafede0867cdb56f4f961bdd687bef2',1,'console_reader.cpp']]],
   ['countmatches_26',['countMatches',['../classhungarian_1_1BruteForceLotteryProcessor.html#a8f5fef55657e794a12c9c90ad608cc94',1,'hungarian::BruteForceLotteryProcessor::countMatches()'],['../classhungarian_1_1CachedLotteryProcessor.html#aad59113b0f276301cb8e3c76482f6a10',1,'hungarian::CachedLotteryProcessor::countMatches()']]]
 ];

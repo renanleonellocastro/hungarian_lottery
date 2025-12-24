@@ -500,13 +500,13 @@ Here is the caller graph for this function:</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="comment">// Print results</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classhungarian_1_1ConsoleWriter.html#a7b2ae99e5e3945b7206e9d3dbdf3afec">ConsoleWriter::printResult</a>(winners);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
-<div class="ttc" id="aclasshungarian_1_1ConsoleReader_html_a51a3b152e4e517dc05ef469f612a0096"><div class="ttname"><a href="classhungarian_1_1ConsoleReader.html#a51a3b152e4e517dc05ef469f612a0096">hungarian::ConsoleReader::readLotteryPick</a></div><div class="ttdeci">void readLotteryPick()</div><div class="ttdoc">Reads exactly 5 numbers from stdin into internal fields.</div><div class="ttdef"><b>Definition:</b> <a href="console__reader_8cpp_source.html#l00066">console_reader.cpp:66</a></div></div>
+<div class="ttc" id="aclasshungarian_1_1ConsoleReader_html_a51a3b152e4e517dc05ef469f612a0096"><div class="ttname"><a href="classhungarian_1_1ConsoleReader.html#a51a3b152e4e517dc05ef469f612a0096">hungarian::ConsoleReader::readLotteryPick</a></div><div class="ttdeci">void readLotteryPick()</div><div class="ttdoc">Reads exactly 5 numbers from stdin into internal fields.</div><div class="ttdef"><b>Definition:</b> <a href="console__reader_8cpp_source.html#l00125">console_reader.cpp:125</a></div></div>
 <div class="ttc" id="aclasshungarian_1_1ConsoleReader_html_aec1271ac62f8e173cbbb7f285b1f96cf"><div class="ttname"><a href="classhungarian_1_1ConsoleReader.html#aec1271ac62f8e173cbbb7f285b1f96cf">hungarian::ConsoleReader::getLotteryPick</a></div><div class="ttdeci">const std::array&lt; uint8_t, 5 &gt; &amp; getLotteryPick() const noexcept</div><div class="ttdoc">Lottery pick numbers.</div><div class="ttdef"><b>Definition:</b> <a href="console__reader_8h_source.html#l00027">console_reader.h:27</a></div></div>
 <div class="ttc" id="aclasshungarian_1_1ConsoleWriter_html_a7b2ae99e5e3945b7206e9d3dbdf3afec"><div class="ttname"><a href="classhungarian_1_1ConsoleWriter.html#a7b2ae99e5e3945b7206e9d3dbdf3afec">hungarian::ConsoleWriter::printResult</a></div><div class="ttdeci">static void printResult(const Winners &amp;winners)</div><div class="ttdoc">Prints the four result fields separated by spaces and newline to stdout.</div><div class="ttdef"><b>Definition:</b> <a href="console__writer_8cpp_source.html#l00013">console_writer.cpp:13</a></div></div>
 <div class="ttc" id="aclasshungarian_1_1Lottery_html_ac54242babb5161121a3c51f70d4b38da"><div class="ttname"><a href="classhungarian_1_1Lottery.html#ac54242babb5161121a3c51f70d4b38da">hungarian::Lottery::m_consoleReader</a></div><div class="ttdeci">ConsoleReader m_consoleReader</div><div class="ttdoc">Console reader for input.</div><div class="ttdef"><b>Definition:</b> <a href="lottery_8h_source.html#l00065">lottery.h:65</a></div></div>
 <div class="ttc" id="astructhungarian_1_1Winners_html"><div class="ttname"><a href="structhungarian_1_1Winners.html">hungarian::Winners</a></div><div class="ttdoc">Result counts for match groups.</div><div class="ttdef"><b>Definition:</b> <a href="winners_8h_source.html#l00016">winners.h:16</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="console__reader_8h_source.html#l00027">hungarian::ConsoleReader::getLotteryPick()</a>, <a class="el" href="lottery_8h_source.html#l00065">m_consoleReader</a>, <a class="el" href="lottery_8h_source.html#l00060">m_processor</a>, <a class="el" href="console__writer_8cpp_source.html#l00013">hungarian::ConsoleWriter::printResult()</a>, and <a class="el" href="console__reader_8cpp_source.html#l00066">hungarian::ConsoleReader::readLotteryPick()</a>.</p>
+<p class="reference">References <a class="el" href="console__reader_8h_source.html#l00027">hungarian::ConsoleReader::getLotteryPick()</a>, <a class="el" href="lottery_8h_source.html#l00065">m_consoleReader</a>, <a class="el" href="lottery_8h_source.html#l00060">m_processor</a>, <a class="el" href="console__writer_8cpp_source.html#l00013">hungarian::ConsoleWriter::printResult()</a>, and <a class="el" href="console__reader_8cpp_source.html#l00125">hungarian::ConsoleReader::readLotteryPick()</a>.</p>
 
 <p class="reference">Referenced by <a class="el" href="main_8cpp_source.html#l00013">main()</a>, <a class="el" href="test__integration__01_8cpp_source.html#l00116">runIntegrationTestForIdxAndMode()</a>, and <a class="el" href="test__lottery_8cpp_source.html#l00018">TEST()</a>.</p>
 <div class="dynheader">
@@ -514,14 +514,18 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classhungarian_1_1Lottery_a7321b53774079b6bcf87e1ba4daaf928_cgraph.png" border="0" usemap="#aclasshungarian_1_1Lottery_a7321b53774079b6bcf87e1ba4daaf928_cgraph" alt=""/></div>
 <map name="aclasshungarian_1_1Lottery_a7321b53774079b6bcf87e1ba4daaf928_cgraph" id="aclasshungarian_1_1Lottery_a7321b53774079b6bcf87e1ba4daaf928_cgraph">
-<area shape="rect" title="Run the lottery application with given command&#45;line arguments." alt="" coords="5,78,157,105"/>
-<area shape="rect" href="classhungarian_1_1ConsoleReader.html#aec1271ac62f8e173cbbb7f285b1f96cf" title="Lottery pick numbers." alt="" coords="205,5,380,47"/>
-<area shape="rect" href="classhungarian_1_1ConsoleWriter.html#a7b2ae99e5e3945b7206e9d3dbdf3afec" title="Prints the four result fields separated by spaces and newline to stdout." alt="" coords="209,71,377,112"/>
-<area shape="rect" href="classhungarian_1_1ConsoleReader.html#a51a3b152e4e517dc05ef469f612a0096" title="Reads exactly 5 numbers from stdin into internal fields." alt="" coords="205,136,380,177"/>
-<area shape="rect" href="console__reader_8cpp.html#a450856033dddb33e3d5c6fe4926bf2f0" title="Converts and validates temporary read numbers into uint8_t array." alt="" coords="441,93,608,119"/>
-<area shape="rect" href="console__reader_8cpp.html#afa91ce07ef60325e4581b3697e55616f" title="Reads exactly 5 numbers from stdin into a temporary array." alt="" coords="428,143,621,170"/>
-<area shape="rect" href="classhungarian_1_1ConsoleReader.html#a617710ceca2ce16e9ab68a075c68841a" title="Assign lottery pick values to member variable." alt="" coords="437,195,612,236"/>
-<area shape="rect" href="console__reader_8cpp.html#a1db810cb4e3a101c473158aef51094d8" title="Global validator for pick values." alt="" coords="669,93,793,119"/>
+<area shape="rect" title="Run the lottery application with given command&#45;line arguments." alt="" coords="5,97,157,123"/>
+<area shape="rect" href="classhungarian_1_1ConsoleReader.html#aec1271ac62f8e173cbbb7f285b1f96cf" title="Lottery pick numbers." alt="" coords="205,24,380,65"/>
+<area shape="rect" href="classhungarian_1_1ConsoleWriter.html#a7b2ae99e5e3945b7206e9d3dbdf3afec" title="Prints the four result fields separated by spaces and newline to stdout." alt="" coords="209,89,377,131"/>
+<area shape="rect" href="classhungarian_1_1ConsoleReader.html#a51a3b152e4e517dc05ef469f612a0096" title="Reads exactly 5 numbers from stdin into internal fields." alt="" coords="205,155,380,196"/>
+<area shape="rect" href="console__reader_8cpp.html#a9aafede0867cdb56f4f961bdd687bef2" title="Converts and validates temporary read line into uint8_t array." alt="" coords="428,111,616,138"/>
+<area shape="rect" href="console__reader_8cpp.html#a4b5a815c42b227565cd17398f5ddfacf" title="Read a line from stdin." alt="" coords="457,162,587,189"/>
+<area shape="rect" href="classhungarian_1_1ConsoleReader.html#a617710ceca2ce16e9ab68a075c68841a" title="Assign lottery pick values to member variable." alt="" coords="435,213,609,255"/>
+<area shape="rect" href="console__reader_8cpp.html#a9b2bd7ed7de976c64e38554eb1a09be4" title="Validator for individual pick number." alt="" coords="679,5,873,47"/>
+<area shape="rect" href="console__reader_8cpp.html#ab5285011837b829e3981df196f62fd60" title="Validator for too few numbers in pick." alt="" coords="667,71,885,112"/>
+<area shape="rect" href="console__reader_8cpp.html#a2c485747d829fe6038540e4ba0b111c4" title="Validator for too many numbers in pick." alt="" coords="664,136,888,177"/>
+<area shape="rect" href="console__reader_8cpp.html#a2633d82e27e7af732ae05b76db6c16e4" title="Global validator for unique numbers in pick." alt="" coords="723,202,829,229"/>
+<area shape="rect" href="test__cached__processor_8cpp.html#a2d1cac7272265bc440a4527324e32f8e" title=" " alt="" coords="936,202,983,229"/>
 </map>
 </div>
 <div class="dynheader">
@@ -635,7 +639,7 @@ Here is the caller graph for this function:</div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehungarian.html">hungarian</a></li><li class="navelem"><a class="el" href="classhungarian_1_1Lottery.html">Lottery</a></li>
-    <li class="footer">Generated on Tue Dec 23 2025 20:22:26 for Hungarian Lottery by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Dec 23 2025 23:37:19 for Hungarian Lottery by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

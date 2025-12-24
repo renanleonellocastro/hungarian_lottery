@@ -1,5 +1,5 @@
-<map id="readTempNumbersFromStdin" name="readTempNumbersFromStdin">
-<area shape="rect" id="node1" title="Reads exactly 5 numbers from stdin into a temporary array." alt="" coords="741,89,935,116"/>
+<map id="readLineFromStdin" name="readLineFromStdin">
+<area shape="rect" id="node1" title="Read a line from stdin." alt="" coords="741,89,872,116"/>
 <area shape="rect" id="node2" href="$classhungarian_1_1ConsoleReader.html#a51a3b152e4e517dc05ef469f612a0096" title="Reads exactly 5 numbers from stdin into internal fields." alt="" coords="519,82,693,123"/>
 <area shape="rect" id="node3" href="$classhungarian_1_1Lottery.html#a7321b53774079b6bcf87e1ba4daaf928" title="Run the lottery application with given command&#45;line arguments." alt="" coords="319,64,471,91"/>
 <area shape="rect" id="node8" href="$test__console__reader_8cpp.html#ad0920cee3b45d2f60da745a7b2d65ea7" title=" " alt="" coords="367,115,422,141"/>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hungarian_145',['hungarian',['../namespacehungarian.html',1,'']]]
+  ['hungarian_147',['hungarian',['../namespacehungarian.html',1,'']]]
 ];

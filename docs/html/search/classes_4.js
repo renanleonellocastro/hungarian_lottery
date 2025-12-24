@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['playersnumbersreader_141',['PlayersNumbersReader',['../classhungarian_1_1PlayersNumbersReader.html',1,'hungarian']]]
+  ['playersnumbersreader_143',['PlayersNumbersReader',['../classhungarian_1_1PlayersNumbersReader.html',1,'hungarian']]]
 ];
