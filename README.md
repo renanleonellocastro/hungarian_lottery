@@ -92,6 +92,13 @@ sudo dnf install -y \
 ./run_lottery.sh tests/data/sample_input_file_1.txt
 ```
 
+> ⚠️ **Sample datasets removed (2026-08-26).** The 200 files under `tests/data/`
+> (`sample_input_file_{1..100}.txt` / `sample_expected_{1..100}.txt`, ~14.8 GB tracked
+> with Git LFS) were purged from this repository to free the account's LFS quota.
+> To run the demo or the integration tests, place your own players file(s) and expected
+> outputs under `tests/data/` using those names (format: one player per line, five
+> space-separated numbers in the range 1–90).
+
 ### Runtime Interaction
 
 The application expects the **lottery draw to be provided via stdin, after the "READY" string is shown**:
@@ -200,7 +207,7 @@ hungarian_lottery/
 │   │   ├── test_lottery_targeted.cpp
 │   │   └── test_players_numbers_reader.cpp
 │   │
-│   └── data/
+│   └── data/                      (not versioned — see the note in "Run")
 │       ├── sample_input_file_{1..100}.txt
 │       └── sample_expected_{1..100}.txt
 │
