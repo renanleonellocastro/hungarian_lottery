@@ -97,6 +97,28 @@ TEST(PlayersNumbersReaderTest, ThrowsOnNonNumericInput) {
     EXPECT_THROW(reader.readFile(file.get()), std::runtime_error);
 }
 
+TEST(PlayersNumbersReaderTest, ThrowsOnTrailingCharacters) {
+    TempFile file("1 2 3 4 5 x\n");
+
+    PlayersNumbersReader reader;
+    EXPECT_THROW(reader.readFile(file.get()), std::runtime_error);
+}
+
+TEST(PlayersNumbersReaderTest, ThrowsOnCommaSeparatedNumbers) {
+    TempFile file("1,2,3,4,5\n");
+
+    PlayersNumbersReader reader;
+    EXPECT_THROW(reader.readFile(file.get()), std::runtime_error);
+}
+
+TEST(PlayersNumbersReaderTest, AcceptsWindowsLineEndings) {
+    TempFile file("1 2 3 4 5\r\n6 7 8 9 10\r\n");
+
+    PlayersNumbersReader reader;
+    EXPECT_NO_THROW(reader.readFile(file.get()));
+    EXPECT_EQ(reader.players().size(), 2);
+}
+
 TEST(PlayersNumbersReaderTest, PreservesOrderAcrossThreads) {
     std::ostringstream oss;
     for (int i = 0; i < 1000; ++i) {

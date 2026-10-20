@@ -117,3 +117,46 @@ TEST(ConsoleReader, ReadInvalidPick10) {
 
     std::cin.rdbuf(old);
 }
+TEST(ConsoleReader, ReturnsFalseAtEndOfInput) {
+    std::istringstream iss("");
+    auto* old = std::cin.rdbuf(iss.rdbuf());
+
+    ConsoleReader consoleReader;
+    EXPECT_FALSE(consoleReader.readLotteryPick());
+
+    std::cin.rdbuf(old);
+}
+
+TEST(ConsoleReader, ReadsConsecutivePicksUntilEndOfInput) {
+    std::istringstream iss("1 2 3 4 5\n90 89 88 87 86\n");
+    auto* old = std::cin.rdbuf(iss.rdbuf());
+
+    ConsoleReader consoleReader;
+    EXPECT_TRUE(consoleReader.readLotteryPick());
+    EXPECT_TRUE(consoleReader.readLotteryPick());
+    EXPECT_EQ(consoleReader.getLotteryPick()[0], 90);
+    EXPECT_FALSE(consoleReader.readLotteryPick());
+
+    std::cin.rdbuf(old);
+}
+
+TEST(ConsoleReader, RejectsTrailingCharacters) {
+    std::istringstream iss("1 2 3 4 5 x\n");
+    auto* old = std::cin.rdbuf(iss.rdbuf());
+
+    ConsoleReader consoleReader;
+    EXPECT_THROW(consoleReader.readLotteryPick(), std::runtime_error);
+
+    std::cin.rdbuf(old);
+}
+
+TEST(ConsoleReader, AcceptsSurroundingWhitespace) {
+    std::istringstream iss("  1 2\t3 4 5  \r\n");
+    auto* old = std::cin.rdbuf(iss.rdbuf());
+
+    ConsoleReader consoleReader;
+    EXPECT_TRUE(consoleReader.readLotteryPick());
+    EXPECT_EQ(consoleReader.getLotteryPick()[4], 5);
+
+    std::cin.rdbuf(old);
+}

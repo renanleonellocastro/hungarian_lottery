@@ -79,3 +79,33 @@ TEST(LotteryTargeted, RunCachedPathConstructsProcessor) {
     std::cin.rdbuf(old);
     std::remove(path.c_str());
 }
+
+TEST(LotteryTargeted, RunReturnsFalseWhenInputEnds) {
+    Lottery lottery;
+
+    const std::string path = "test_players_eof.txt";
+    {
+        std::ofstream ofs(path);
+        ofs << "1 2 3 4 5\n";
+    }
+
+    const char* args[] = { "prog", path.c_str() };
+    char* argv[] = { const_cast<char*>(args[0]), const_cast<char*>(args[1]), nullptr };
+
+    std::istringstream input("1 2 3 4 5\n");
+    auto* oldIn = std::cin.rdbuf(input.rdbuf());
+    std::ostringstream output;
+    auto* oldOut = std::cout.rdbuf(output.rdbuf());
+
+    lottery.initialize(2, argv, LotteryMode::Cached);
+    const bool firstRun = lottery.run();
+    const bool secondRun = lottery.run();
+
+    std::cout.rdbuf(oldOut);
+    std::cin.rdbuf(oldIn);
+    std::remove(path.c_str());
+
+    EXPECT_TRUE(firstRun);
+    EXPECT_FALSE(secondRun);
+    EXPECT_EQ(output.str(), "READY\n0 0 0 1\n");
+}

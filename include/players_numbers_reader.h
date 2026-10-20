@@ -87,6 +87,18 @@ private:
     void validateValue(int value, size_t lineNumber) const;
 
     /**
+     * @brief Validate that the whole line was consumed as integers.
+     *
+     * Rejects separators other than whitespace and trailing non-numeric
+     * tokens. Logs and throws on failure.
+     *
+     * @param lineStream Stream positioned after the last parsed integer.
+     * @param lineNumber Line number for error messages.
+     * @throws std::runtime_error on validation failure.
+     */
+    void validateOnlyNumbers(const std::istringstream& lineStream, size_t lineNumber) const;
+
+    /**
      * @brief Validate that the given 5 numbers are unique.
      *
      * Sorts a local copy and ensures there are no duplicate numbers in the

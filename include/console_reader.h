@@ -14,9 +14,10 @@ class ConsoleReader {
 public:
     /**
      * @brief Reads exactly 5 numbers from stdin into internal fields.
+     * @return true when a pick was read, false when stdin reached end of input.
      * @throws std::runtime_error on parse/validation errors.
      */
-    void readLotteryPick();
+    bool readLotteryPick();
 
     /**
      * @brief Lottery pick numbers.

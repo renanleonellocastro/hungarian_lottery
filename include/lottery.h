@@ -1,5 +1,5 @@
 /**
- * @file lotery.h
+ * @file lottery.h
  * @brief Hungarian Lottery App.
  */
 #pragma once
@@ -40,10 +40,11 @@ public:
     void initialize(int argc, char** argv, LotteryMode mode);
 
     /**
-     * @brief Run the lottery application with given command-line arguments.
+     * @brief Process one lottery draw: read it from stdin and print the winners.
+     * @return true when a draw was processed, false when stdin reached end of input.
      * @throws std::runtime_error on errors.
      */
-    void run();
+    bool run();
 
     /**
      * @brief Get the number of players loaded from the input file.

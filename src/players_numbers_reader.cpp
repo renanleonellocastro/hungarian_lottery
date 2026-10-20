@@ -36,6 +36,8 @@ std::array<uint8_t,5> PlayersNumbersReader::fillNumbersFromStream(std::istringst
         numbers[index++] = static_cast<uint8_t>(parsedValue);
     }
 
+    validateOnlyNumbers(lineStream, lineNumber);
+
     if (index != numbers.size()) {
         LOG(ERROR) << "Invalid numbers count on line " << lineNumber << " (expected " << numbers.size() << ").";
         throw std::runtime_error("invalid numbers count");
@@ -48,6 +50,13 @@ void PlayersNumbersReader::validateValue(int value, size_t lineNumber) const {
     if (value < 1 || value > 90) {
         LOG(ERROR) << "Value out of range on line " << lineNumber << ": " << value;
         throw std::runtime_error("value out of range");
+    }
+}
+
+void PlayersNumbersReader::validateOnlyNumbers(const std::istringstream& lineStream, size_t lineNumber) const {
+    if (!lineStream.eof()) {
+        LOG(ERROR) << "Invalid characters on line " << lineNumber;
+        throw std::runtime_error("invalid characters");
     }
 }
 

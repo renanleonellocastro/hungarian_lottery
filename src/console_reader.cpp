@@ -1,6 +1,8 @@
 #include "console_reader.h"
 
+#include <sstream>
 #include <iostream>
+#include <optional>
 #include <stdexcept>
 #include <algorithm>
 #include <glog/logging.h>
@@ -74,22 +76,43 @@ static void validateUnique(const std::array<uint8_t,5>& pick) {
 }
 
 /**
+ * @brief Validator for unexpected characters in pick.
+ * 
+ * Validates that the whole line was consumed as integers, rejecting
+ * separators other than whitespace and any trailing non-numeric token.
+ * Logs and throws on failure.
+ * 
+ * @param lineStream Stream positioned after the last parsed integer.
+ * @throws std::runtime_error on validation failure.
+ */
+static void validateOnlyNumbersProvided(const std::istringstream& lineStream) {
+    if (!lineStream.eof()) {
+        LOG(ERROR) << "Invalid characters found on lottery pick";
+        throw std::runtime_error("invalid characters in lottery pick");
+    }
+}
+
+/**
  * @brief Read a line from stdin.
  * 
  * This helper reads a string line from stdin.
  * 
- * @return std::string Temporary string with read numbers.
- * @throws std::runtime_error on read failure.
+ * @return std::optional<std::string> The line read, or std::nullopt at end of input.
+ * @throws std::runtime_error on stream failure.
  */
-static std::string readLineFromStdin() {
+static std::optional<std::string> readLineFromStdin() {
     std::string temp;
 
-    if (!(std::getline(std::cin, temp))) {
+    if (std::getline(std::cin, temp)) {
+        return temp;
+    }
+
+    if (std::cin.bad()) {
         LOG(ERROR) << "Failed to read line from stdin";
         throw std::runtime_error("failed to read lottery pick");
     }
 
-    return temp;
+    return std::nullopt;
 }
 
 /**
@@ -113,6 +136,7 @@ static std::array<uint8_t,5> convertAndValidateReadLine(const std::string& temp)
         lotteryPick[count++%5] = static_cast<uint8_t>(value);
     }
 
+    validateOnlyNumbersProvided(iss);
     validateTooManyNumbersProvidedForLotteryPick(count);
     validateTooFewNumbersProvidedForLotteryPick(count);
     validateUnique(lotteryPick);
@@ -120,11 +144,18 @@ static std::array<uint8_t,5> convertAndValidateReadLine(const std::string& temp)
     return lotteryPick;
 }
 
-void ConsoleReader::readLotteryPick() {
-    auto temp = readLineFromStdin();
-    auto lotteryPick = convertAndValidateReadLine(temp);
+bool ConsoleReader::readLotteryPick() {
+    auto line = readLineFromStdin();
+
+    if (!line) {
+        LOG(INFO) << "End of input reached";
+        return false;
+    }
+
+    auto lotteryPick = convertAndValidateReadLine(*line);
     setMembers(lotteryPick);
-    LOG(INFO) << "Read lottery pick: " << lotteryPick[0] << ' ' << lotteryPick[1] << ' ' << lotteryPick[2] << ' ' << lotteryPick[3] << ' ' << lotteryPick[4];
+    LOG(INFO) << "Read lottery pick: " << int{lotteryPick[0]} << ' ' << int{lotteryPick[1]} << ' ' << int{lotteryPick[2]} << ' ' << int{lotteryPick[3]} << ' ' << int{lotteryPick[4]};
+    return true;
 }
 
 void ConsoleReader::setMembers(const std::array<uint8_t,5>& lotteryPick) {

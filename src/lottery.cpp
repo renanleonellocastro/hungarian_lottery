@@ -22,9 +22,12 @@ void Lottery::initialize(int argc, char** argv, LotteryMode mode) {
     ConsoleWriter::printReady();
 }
 
-void Lottery::run() {
-    // Read lottery pick from stdin
-    m_consoleReader.readLotteryPick();
+bool Lottery::run() {
+    // Read lottery pick from stdin, stopping at end of input
+    if (!m_consoleReader.readLotteryPick()) {
+        return false;
+    }
+
     std::array<uint8_t,5> lotteryPick = m_consoleReader.getLotteryPick();
 
     // Compute winners
@@ -32,6 +35,7 @@ void Lottery::run() {
 
     // Print results
     ConsoleWriter::printResult(winners);
+    return true;
 }
 
 std::uint32_t Lottery::getNumberOfPlayers() {

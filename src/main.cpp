@@ -21,8 +21,7 @@ int main(int argc, char** argv) {
 
         lottery.initialize(argc, argv, mode);
 
-        while (true) {
-            lottery.run();
+        while (lottery.run()) {
         }
 
     } catch (const std::exception& ex) {
