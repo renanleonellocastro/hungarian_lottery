@@ -1,4 +1,0 @@
-<map id="hungarian::PlayersNumbersReader::fillNumbersFromStream" name="hungarian::PlayersNumbersReader::fillNumbersFromStream">
-<area shape="rect" id="node1" title="Fill an array of five numbers from a line stream." alt="" coords="5,5,216,47"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1PlayersNumbersReader.html#ab82132137ac0b4c3a66ab9167bad56b0" title="Validate a single integer value is within allowed range." alt="" coords="264,5,448,47"/>
-</map>

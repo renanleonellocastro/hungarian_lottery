@@ -1,4 +1,0 @@
-<map id="hungarian::CachedLotteryProcessor::countMatches" name="hungarian::CachedLotteryProcessor::countMatches">
-<area shape="rect" id="node1" title="Counts how many players have the exact matching combination represented by the key." alt="" coords="5,5,176,47"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a680d222b2c863f145b81c16ac9c80222" title="Encode a sorted array of numbers into a HashKey." alt="" coords="224,5,395,47"/>
-</map>

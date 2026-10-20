@@ -1,6 +1,0 @@
-<map id="hungarian::CachedLotteryProcessor::generateCombinations" name="hungarian::CachedLotteryProcessor::generateCombinations">
-<area shape="rect" id="node1" title="Generate all combinations, when the order does not matter, of a given size from the provided numbers." alt="" coords="5,71,224,112"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a9fdec5cc8ea6da46fa09059d2f601c72" title="Internal helpers for specific combination sizes." alt="" coords="272,5,512,47"/>
-<area shape="rect" id="node3" href="$classhungarian_1_1CachedLotteryProcessor.html#a6837eb67ccfbd86ac8bc459819e839a5" title=" " alt="" coords="272,71,512,112"/>
-<area shape="rect" id="node4" href="$classhungarian_1_1CachedLotteryProcessor.html#a9e03c1e2a4108afe9a11d110e2d9a088" title=" " alt="" coords="272,136,512,177"/>
-</map>

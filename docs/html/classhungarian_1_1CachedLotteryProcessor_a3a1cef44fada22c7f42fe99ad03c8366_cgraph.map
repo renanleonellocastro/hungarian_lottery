@@ -1,5 +1,0 @@
-<map id="hungarian::CachedLotteryProcessor::initializeCache" name="hungarian::CachedLotteryProcessor::initializeCache">
-<area shape="rect" id="node1" title="Initializes the cache with all possible combinations available in the lottery." alt="" coords="5,39,177,80"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1CachedLotteryProcessor.html#a8bddd53588ec6b9f4a8beaeadbbd342f" title="Clears the cache of all stored combinations and counts." alt="" coords="225,5,396,47"/>
-<area shape="rect" id="node3" href="$classhungarian_1_1CachedLotteryProcessor.html#a54250de39c46926b5c78a59bdf6c3a6c" title="Reserves space in the cache for all possible combinations." alt="" coords="225,71,396,112"/>
-</map>

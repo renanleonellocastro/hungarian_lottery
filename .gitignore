@@ -1,38 +1,46 @@
+# Build trees
 build/
+build-*/
+cmake-build-*/
+Testing/
+
+# Generated documentation (published to GitHub Pages by CI)
+docs/html/
+documentation.pdf
+
+# Generated test data, benchmark data and reports
+tests/data/
+benchmarks/data/
+coverage/
+*_results.xml
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Object files and precompiled headers
 *.o
 *.obj
-*.exe
-*.log
-tests/integration/*.txt
-# Prerequisites
-*.d
-
-# Compiled Object files
 *.slo
 *.lo
-*.o
-*.obj
-
-# Precompiled Headers
+*.d
+*.dwo
 *.gch
 *.pch
-
-# Linker files
 *.ilk
-
-# Debugger Files
 *.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
 
 # Fortran module files
 *.mod
 *.smod
 
-# Compiled Static libraries
+# Libraries
+*.so
+*.dylib
+*.dll
 *.lai
 *.la
 *.a
@@ -43,5 +51,7 @@ tests/integration/*.txt
 *.out
 *.app
 
-# debug information files
-*.dwo
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store

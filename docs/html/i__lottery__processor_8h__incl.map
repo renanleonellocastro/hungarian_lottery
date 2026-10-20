@@ -1,7 +1,0 @@
-<map id="i_lottery_processor.h" name="i_lottery_processor.h">
-<area shape="rect" id="node1" title="Interface for lottery processors." alt="" coords="37,5,181,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,56,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="81,80,138,107"/>
-<area shape="rect" id="node4" href="$winners_8h.html" title="Winners struct for lottery results." alt="" coords="162,80,241,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="171,155,232,181"/>
-</map>

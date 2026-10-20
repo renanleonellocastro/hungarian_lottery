@@ -1,8 +1,0 @@
-<map id="convertAndValidateReadLine" name="convertAndValidateReadLine">
-<area shape="rect" id="node1" title="Converts and validates temporary read line into uint8_t array." alt="" coords="5,111,193,138"/>
-<area shape="rect" id="node2" href="$console__reader_8cpp.html#a9b2bd7ed7de976c64e38554eb1a09be4" title="Validator for individual pick number." alt="" coords="256,5,451,47"/>
-<area shape="rect" id="node3" href="$console__reader_8cpp.html#ab5285011837b829e3981df196f62fd60" title="Validator for too few numbers in pick." alt="" coords="245,71,462,112"/>
-<area shape="rect" id="node4" href="$console__reader_8cpp.html#a2c485747d829fe6038540e4ba0b111c4" title="Validator for too many numbers in pick." alt="" coords="241,136,465,177"/>
-<area shape="rect" id="node5" href="$console__reader_8cpp.html#a2633d82e27e7af732ae05b76db6c16e4" title="Global validator for unique numbers in pick." alt="" coords="300,202,407,229"/>
-<area shape="rect" id="node6" href="$test__cached__processor_8cpp.html#a2d1cac7272265bc440a4527324e32f8e" title=" " alt="" coords="513,202,560,229"/>
-</map>

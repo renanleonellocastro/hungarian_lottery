@@ -1,4 +1,0 @@
-<map id="hungarian::CachedLotteryProcessor" name="hungarian::CachedLotteryProcessor">
-<area shape="rect" id="node1" title="Cached processor that indexes all possible loterry combinations using a hash key." alt="" coords="5,160,272,487"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1ILotteryProcessor.html" title="Interface for lottery runtime polymorphism." alt="" coords="43,5,234,112"/>
-</map>

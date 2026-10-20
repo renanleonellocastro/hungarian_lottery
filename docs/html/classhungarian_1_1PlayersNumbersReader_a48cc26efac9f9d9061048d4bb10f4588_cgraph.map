@@ -1,7 +1,0 @@
-<map id="hungarian::PlayersNumbersReader::parseLine" name="hungarian::PlayersNumbersReader::parseLine">
-<area shape="rect" id="node1" title="Parse a single line from the input file into 5 numbers." alt="" coords="5,39,189,80"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1PlayersNumbersReader.html#afe1f6b6e882edeb98ea04e33364dddb7" title="Parse numbers from a line stream into an array of five numbers." alt="" coords="237,39,468,80"/>
-<area shape="rect" id="node3" href="$classhungarian_1_1PlayersNumbersReader.html#a8d7b41b9d2d3defd907c84a92ea97f08" title="Fill an array of five numbers from a line stream." alt="" coords="516,5,727,47"/>
-<area shape="rect" id="node5" href="$classhungarian_1_1PlayersNumbersReader.html#ad54d6aaa375145a7e80e26f6789e14cf" title="Validate that the given 5 numbers are unique." alt="" coords="529,71,713,112"/>
-<area shape="rect" id="node4" href="$classhungarian_1_1PlayersNumbersReader.html#ab82132137ac0b4c3a66ab9167bad56b0" title="Validate a single integer value is within allowed range." alt="" coords="775,5,959,47"/>
-</map>

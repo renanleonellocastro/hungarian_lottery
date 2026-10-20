@@ -1,4 +1,0 @@
-<map id="hungarian::Lottery::getNumberOfPlayers" name="hungarian::Lottery::getNumberOfPlayers">
-<area shape="rect" id="node1" title="Get the number of players loaded from the input file." alt="" coords="5,5,157,47"/>
-<area shape="rect" id="node2" href="$classhungarian_1_1PlayersNumbersReader.html#af9c18921c4c071acf06beec412fbd5f9" title="Access the parsed players numbers as vector of 5&#45;length vectors." alt="" coords="205,5,389,47"/>
-</map>
