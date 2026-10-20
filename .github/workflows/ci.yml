@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DEPENDENCIES: ninja-build pkg-config libgtest-dev libgoogle-glog-dev
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.compiler }} ${{ matrix.build_type }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+        build_type: [Release, Debug]
+        include:
+          - compiler: gcc
+            cxx: g++
+          - compiler: clang
+            cxx: clang++
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ${{ env.DEPENDENCIES }}
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DWARNINGS_AS_ERRORS=ON
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Unit tests
+        run: ctest --test-dir build --label-regex unit --output-on-failure -j "$(nproc)"
+
+      - name: Integration tests
+        run: ctest --test-dir build --label-regex integration --output-on-failure
+
+      - name: Benchmark smoke run
+        run: ./build/lottery_benchmark build/tests/data/medium/players.txt build/tests/data/medium/draws.txt 3 >> "$GITHUB_STEP_SUMMARY"
+
+  sanitizers:
+    name: ASan + UBSan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ${{ env.DEPENDENCIES }}
+
+      - name: Configure
+        run: >
+          cmake -S . -B build -G Ninja
+          -DCMAKE_CXX_COMPILER=g++
+          -DCMAKE_BUILD_TYPE=Debug
+          -DENABLE_SANITIZERS=ON
+          -DBUILD_BENCHMARKS=OFF
+
+      - name: Build
+        run: cmake --build build
+
+      # The 200k player dataset takes minutes under ASan instrumentation and adds no
+      # code paths over the 1k dataset, so only the small dataset runs here.
+      - name: Test
+        env:
+          ASAN_OPTIONS: detect_leaks=1:strict_string_checks=1:detect_stack_use_after_return=1
+          UBSAN_OPTIONS: print_stacktrace=1
+        run: ctest --test-dir build --exclude-regex medium --output-on-failure -j "$(nproc)"
+
+  valgrind:
+    name: Valgrind memcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ${{ env.DEPENDENCIES }} valgrind
+
+      - name: Build
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug -DBUILD_BENCHMARKS=OFF
+          cmake --build build
+
+      - name: Memcheck the application on the small dataset
+        run: |
+          data=build/tests/data/small
+          valgrind --error-exitcode=1 --leak-check=full --errors-for-leak-kinds=definite,indirect \
+            ./build/lottery "$data/players.txt" < "$data/draws.txt" > output.txt
+          diff <(tail -n +2 output.txt) "$data/expected.txt"
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ${{ env.DEPENDENCIES }} gcovr
+
+      - name: Measure coverage
+        run: ./run_coverage.sh
+
+      - name: Coverage badge
+        run: python3 tools/coverage_badge.py coverage/summary.json coverage/badge.json
+
+      - name: Job summary
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          summary = json.load(open("coverage/summary.json"))
+          print("### Coverage\n")
+          print("| Metric | Covered | Total | Percent |")
+          print("|---|---:|---:|---:|")
+          for metric in ("line", "function", "branch"):
+              print(f"| {metric} | {summary[metric + '_covered']} | {summary[metric + '_total']} | {summary[metric + '_percent']}% |")
+          EOF
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/

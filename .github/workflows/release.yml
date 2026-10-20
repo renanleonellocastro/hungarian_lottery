@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  linux-x86_64:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ninja-build pkg-config libgtest-dev libgoogle-glog-dev
+
+      # Portable binary: no -march=native since it will run on other machines.
+      - name: Build and test
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_NATIVE_ARCH=OFF
+          cmake --build build
+          ctest --test-dir build --output-on-failure
+
+      - name: Package
+        run: |
+          package="hungarian_lottery-${GITHUB_REF_NAME}-linux-x86_64"
+          mkdir -p "$package/bin" "$package/tools"
+          cp build/lottery build/lottery_benchmark "$package/bin/"
+          cp tools/generate_players.py "$package/tools/"
+          cp README.md LICENSE "$package/"
+          tar -czf "$package.tar.gz" "$package"
+          sha256sum "$package.tar.gz" > "$package.tar.gz.sha256"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          body: |
+            Linux x86_64 build (Ubuntu 24.04, portable flags).
+            Runtime dependency: glog (`libgoogle-glog0v6t64` on Ubuntu 24.04).
+          files: |
+            hungarian_lottery-*.tar.gz
+            hungarian_lottery-*.tar.gz.sha256

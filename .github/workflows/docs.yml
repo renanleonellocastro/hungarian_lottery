@@ -1,0 +1,63 @@
+name: Docs
+
+# Publishes the Doxygen reference, the coverage report and the coverage badge
+# endpoint to GitHub Pages:
+#   /                       Doxygen HTML
+#   /coverage/              gcovr HTML report
+#   /badges/coverage.json   shields.io endpoint consumed by the README badge
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: >
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends
+          ninja-build pkg-config libgtest-dev libgoogle-glog-dev gcovr doxygen graphviz
+
+      - name: Doxygen
+        run: ./generate_full_documentation.sh
+
+      - name: Coverage
+        run: ./run_coverage.sh
+
+      - name: Assemble site
+        run: |
+          mkdir -p site/badges
+          cp -r docs/html/. site/
+          cp -r coverage site/coverage
+          python3 tools/coverage_badge.py coverage/summary.json site/badges/coverage.json
+          touch site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
