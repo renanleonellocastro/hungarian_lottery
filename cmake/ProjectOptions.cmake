@@ -28,7 +28,8 @@ endif()
 
 if(ENABLE_COVERAGE)
   message(STATUS "Coverage instrumentation enabled")
-  add_compile_options(-O0 -g --coverage)
+  # Atomic counters keep the gcov data consistent with the multithreaded preprocessing.
+  add_compile_options(-O0 -g --coverage -fprofile-update=atomic)
   add_link_options(--coverage)
 endif()
 
