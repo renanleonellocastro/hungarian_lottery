@@ -1,0 +1,3 @@
+add_executable(lottery_benchmark lottery_benchmark.cpp)
+target_link_libraries(lottery_benchmark PRIVATE hungarian_lottery)
+set_target_properties(lottery_benchmark PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

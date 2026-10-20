@@ -14,6 +14,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 option(BUILD_TESTS "Build unit and integration tests" ON)
+option(BUILD_BENCHMARKS "Build the benchmark tool" ON)
 option(ENABLE_NATIVE_ARCH "Optimize Release builds for the host CPU (-march=native)" ON)
 option(ENABLE_LTO "Enable link time optimization in Release builds when supported" ON)
 option(ENABLE_COVERAGE "Instrument the build for gcov based coverage" OFF)
@@ -25,6 +26,10 @@ include(cmake/ProjectOptions.cmake)
 find_package(Threads REQUIRED)
 
 add_subdirectory(src)
+
+if(BUILD_BENCHMARKS)
+  add_subdirectory(benchmarks)
+endif()
 
 if(BUILD_TESTS)
   enable_testing()
