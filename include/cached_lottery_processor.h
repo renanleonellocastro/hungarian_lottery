@@ -236,7 +236,7 @@ private:
      * This method takes an array of numbers, sorts and encodes it into a single uint64_t key.
      * The encoding ensures that each sorted unique combination maps to a unique key.
      * 
-     * @param combination An array of numbers representing the combination.
+     * @param combinationOfNumbers An array of numbers representing the combination.
      * @return The encoded hash key as a uint64_t.
      */
     static HashKey getHashKeyFromNumbersCombination(const std::array<uint8_t,5>& combinationOfNumbers);

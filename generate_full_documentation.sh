@@ -16,8 +16,7 @@ if [ ! -f Doxyfile ]; then
     exit 1
 fi
 
-rm -rf docs
-mkdir -p docs
+rm -rf docs/html
 
 doxygen Doxyfile
 

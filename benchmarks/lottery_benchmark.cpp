@@ -2,7 +2,7 @@
  * @file lottery_benchmark.cpp
  * @brief Measures load, preprocessing and per draw latency of every lottery strategy.
  *
- * Usage: lottery_benchmark <players_file> <draws_file> [repetitions]
+ * Usage: `lottery_benchmark players_file draws_file [repetitions]`
  *
  * The draws file uses the players file format (five numbers per line). Every
  * draw is evaluated `repetitions` times per strategy and the latency

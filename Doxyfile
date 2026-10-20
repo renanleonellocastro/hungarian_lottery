@@ -2,8 +2,8 @@
 # Project information
 # =================================================
 PROJECT_NAME           = "Hungarian Lottery"
-PROJECT_BRIEF          = "High-performance C++ lottery processing engine"
-PROJECT_NUMBER         = 1.0
+PROJECT_BRIEF          = "Constant time winner counting for the Hungarian lottery"
+PROJECT_NUMBER         = 1.1.0
 OUTPUT_DIRECTORY       = docs
 
 # =================================================
@@ -19,14 +19,15 @@ EXTRACT_ANON_NSPACES   = YES
 # =================================================
 # Input
 # =================================================
-INPUT                  = src \
+INPUT                  = docs/mainpage.md \
                          include \
-                         tests
+                         src \
+                         benchmarks
 
 RECURSIVE              = YES
 FILE_PATTERNS          = *.h *.hpp *.cpp
 INCLUDE_FILE_PATTERNS  = *.h *.hpp
-USE_MDFILE_AS_MAINPAGE = README.md
+USE_MDFILE_AS_MAINPAGE = docs/mainpage.md
 
 # =================================================
 # Language & parsing
@@ -65,7 +66,6 @@ WARN_NO_PARAMDOC       = NO
 # =================================================
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
-HTML_TIMESTAMP         = YES
 DISABLE_INDEX          = NO
 GENERATE_TREEVIEW      = YES
 FULL_PATH_NAMES        = NO
@@ -76,7 +76,6 @@ FULL_PATH_NAMES        = NO
 HAVE_DOT               = YES
 DOT_NUM_THREADS        = 2
 
-CLASS_DIAGRAMS         = YES
 UML_LOOK               = YES
 
 CALL_GRAPH             = YES
@@ -95,4 +94,4 @@ REFERENCES_RELATION    = YES
 # Misc
 # =================================================
 GENERATE_LATEX         = NO
-QUIET                  = NO
+QUIET                  = YES
