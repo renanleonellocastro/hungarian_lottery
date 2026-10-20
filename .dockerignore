@@ -1,0 +1,10 @@
+.git
+.github
+build
+build-*
+Testing
+coverage
+docs/html
+documentation.pdf
+benchmarks/data
+tests/data
