@@ -115,6 +115,23 @@ TEST(PlayersNumbersReaderTest, PreservesOrderAcrossThreads) {
     EXPECT_EQ(players.back()[0], (999 % 86) + 1);
 }
 
+TEST(PlayersNumbersReaderTest, ReadsEveryLineForAnyFileSizeAndThreadSplit) {
+    // Small files split across many threads leave trailing chunks empty; every size must still parse.
+    for (int lineCount = 1; lineCount <= 200; ++lineCount) {
+        std::ostringstream oss;
+
+        for (int i = 0; i < lineCount; ++i) {
+            oss << "1 2 3 4 5\n";
+        }
+
+        TempFile file(oss.str());
+
+        PlayersNumbersReader reader;
+        ASSERT_NO_THROW(reader.readFile(file.get())) << "line count " << lineCount;
+        EXPECT_EQ(reader.players().size(), static_cast<size_t>(lineCount));
+    }
+}
+
 TEST(PlayersNumbersReaderTest, SingleLineUsesSingleThreadSafely) {
     TempFile file("1 2 3 4 5\n");
 

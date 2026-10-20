@@ -127,7 +127,8 @@ std::future<std::vector<std::array<uint8_t,5>>> PlayersNumbersReader::spawnParse
 }
 
 std::vector<std::array<uint8_t,5>> PlayersNumbersReader::parseChunk(const std::vector<std::string>& lines, size_t taskIndex, size_t chunkSize) const {
-    const size_t begin = taskIndex * chunkSize;
+    // Rounding the chunk size up can leave trailing tasks without lines, so clamp both bounds.
+    const size_t begin = std::min(taskIndex * chunkSize, lines.size());
     const size_t end = std::min(begin + chunkSize, lines.size());
 
     std::vector<std::array<uint8_t,5>> parsed;
