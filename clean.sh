@@ -1,21 +1,14 @@
 #!/usr/bin/env bash
+# Remove every generated directory: build trees, test and coverage reports, generated docs.
 set -euo pipefail
 
-BUILD_DIR=build
-TESTING_DIR=Testing
+GENERATED_DIRS=(build build-coverage Testing coverage docs/html)
 
-if [ -d "$BUILD_DIR" ]; then
-  echo "Removing $BUILD_DIR/"
-  rm -rf "$BUILD_DIR"
-else
-  echo "$BUILD_DIR/ does not exist"
-fi
-
-if [ -d "$TESTING_DIR" ]; then
-  echo "Removing $TESTING_DIR/"
-  rm -rf "$TESTING_DIR"
-else
-  echo "$TESTING_DIR/ does not exist"
-fi
+for dir in "${GENERATED_DIRS[@]}"; do
+  if [ -d "$dir" ]; then
+    echo "Removing $dir/"
+    rm -rf "$dir"
+  fi
+done
 
 echo "Clean complete."

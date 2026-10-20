@@ -1,21 +1,26 @@
-cmake_minimum_required(VERSION 3.14)
-project(hungarian_lottery VERSION 1.0 LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.16)
+project(hungarian_lottery
+  VERSION 1.1.0
+  DESCRIPTION "Hungarian lottery (Otoslotto) winners engine"
+  LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(BUILD_TESTS "Build unit tests" ON)
-option(ENABLE_COVERAGE "Enable gcov/lcov coverage target" OFF)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# When coverage is requested, add compiler and linker flags (GCC/Clang)
-if(ENABLE_COVERAGE)
-  if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    message(STATUS "Enable coverage flags for compiler ${CMAKE_CXX_COMPILER_ID}")
-    add_compile_options(-O0 -g --coverage)
-    add_link_options(--coverage)
-  else()
-    message(WARNING "Coverage enabled but unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
-  endif()
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
 endif()
+
+option(BUILD_TESTS "Build unit and integration tests" ON)
+option(ENABLE_NATIVE_ARCH "Optimize Release builds for the host CPU (-march=native)" ON)
+option(ENABLE_LTO "Enable link time optimization in Release builds when supported" ON)
+option(ENABLE_COVERAGE "Instrument the build for gcov based coverage" OFF)
+option(ENABLE_SANITIZERS "Build with AddressSanitizer and UndefinedBehaviorSanitizer" OFF)
+option(WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
+
+include(cmake/ProjectOptions.cmake)
 
 find_package(Threads REQUIRED)
 

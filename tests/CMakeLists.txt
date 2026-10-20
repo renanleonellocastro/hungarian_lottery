@@ -1,70 +1,52 @@
 find_package(GTest REQUIRED)
-
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
-file(GLOB UNIT_SOURCES unit/*.cpp)
-file(GLOB INTEGRATION_SOURCES integration/*.cpp)
-
-# Add the custom GoogleTest main so both test executables include it.
-set(TEST_MAIN ${CMAKE_SOURCE_DIR}/tests/gtest_main.cpp)
-
-## Unit tests executable
-add_executable(tests_unit ${UNIT_SOURCES} ${TEST_MAIN})
-target_link_libraries(tests_unit PRIVATE GTest::gtest hungarian_lottery Threads::Threads)
-
-# Expose test-only helpers in headers when compiling the unit test binary.
-target_compile_definitions(tests_unit PRIVATE UNIT_TESTING=1)
-
-# Register individual GoogleTest cases with CTest so each unit test appears
-# as its own test (improves reporting and allows running a subset).
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
 include(GoogleTest)
-gtest_discover_tests(tests_unit)
 
-## Integration tests executable
+set(TEST_MAIN ${PROJECT_SOURCE_DIR}/tests/gtest_main.cpp)
+set(TEST_DATA_DIR ${PROJECT_BINARY_DIR}/tests/data)
+set(DATASET_GENERATOR ${PROJECT_SOURCE_DIR}/tools/generate_players.py)
+
+# Unit tests
+
+file(GLOB UNIT_SOURCES CONFIGURE_DEPENDS unit/*.cpp)
+add_executable(tests_unit ${UNIT_SOURCES} ${TEST_MAIN})
+target_link_libraries(tests_unit PRIVATE GTest::gtest hungarian_lottery)
+gtest_discover_tests(tests_unit
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  PROPERTIES LABELS unit
+  DISCOVERY_TIMEOUT 60)
+
+# Deterministic datasets, generated at build time by an independent brute force oracle.
+# They stay small so the whole suite runs in seconds, including under sanitizers.
+
+function(add_test_dataset name players draws seed)
+  set(output_dir ${TEST_DATA_DIR}/${name})
+  add_custom_command(
+    OUTPUT ${output_dir}/players.txt ${output_dir}/draws.txt ${output_dir}/expected.txt
+    COMMAND Python3::Interpreter ${DATASET_GENERATOR}
+            --players ${players} --draws ${draws} --seed ${seed} --out-dir ${output_dir}
+    DEPENDS ${DATASET_GENERATOR}
+    COMMENT "Generating ${name} dataset (${players} players, ${draws} draws)")
+  add_custom_target(dataset_${name} DEPENDS ${output_dir}/expected.txt)
+  set(TEST_DATASET_TARGETS ${TEST_DATASET_TARGETS} dataset_${name} PARENT_SCOPE)
+endfunction()
+
+add_test_dataset(small 1000 20 1)
+add_test_dataset(medium 200000 20 2)
+
+# Integration tests
+
+file(GLOB INTEGRATION_SOURCES CONFIGURE_DEPENDS integration/*.cpp)
 add_executable(tests_integration ${INTEGRATION_SOURCES} ${TEST_MAIN})
-target_link_libraries(tests_integration PRIVATE GTest::gtest hungarian_lottery Threads::Threads)
+target_link_libraries(tests_integration PRIVATE GTest::gtest hungarian_lottery)
+target_compile_definitions(tests_integration PRIVATE TEST_DATA_DIR="${TEST_DATA_DIR}")
+add_dependencies(tests_integration ${TEST_DATASET_TARGETS})
+gtest_discover_tests(tests_integration
+  PROPERTIES LABELS integration
+  DISCOVERY_TIMEOUT 60)
 
-## Copy test data into the build tree so tests can find files at runtime.
-add_custom_target(copy_test_data
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/tests/data ${CMAKE_BINARY_DIR}/tests/data
-	COMMENT "Copy tests/data -> ${CMAKE_BINARY_DIR}/tests/data"
-)
-
-add_dependencies(tests_integration copy_test_data)
-add_test(NAME integration_tests	COMMAND tests_integration)
-
-# Provide the build-time path to the copied test data so the tests can
-# reliably locate files regardless of the current working directory.
-target_compile_definitions(tests_integration PRIVATE TEST_DATA_DIR=\"${CMAKE_BINARY_DIR}/tests/data\")
-
-# Ensure integration tests are built with Release performance flags even if the
-# overall build type differs. Users can still override per-target flags.
-target_compile_options(tests_integration PRIVATE $<$<CONFIG:Release>:-O3> $<$<CONFIG:Release>:-Ofast> $<$<CONFIG:Release>:-march=native> $<$<CONFIG:Release>:-flto>)
-target_link_options(tests_integration PRIVATE $<$<CONFIG:Release>:-flto>)
-
-if(ENABLE_COVERAGE)
-	find_program(LCOV_EXEC lcov)
-	find_program(GENHTML_EXEC genhtml)
-
-	if(LCOV_EXEC AND GENHTML_EXEC)
-		add_custom_target(coverage
-			COMMAND ${CMAKE_COMMAND} -E echo "Running unit tests for coverage..."
-			COMMAND ${CMAKE_BINARY_DIR}/tests/tests_unit --gtest_color=no --gtest_output=xml:tests_unit_results.xml
-			COMMAND ${CMAKE_COMMAND} -E echo "Capturing coverage with lcov..."
-			COMMAND ${LCOV_EXEC} --capture --directory ${CMAKE_BINARY_DIR} --output-file coverage.info
-			COMMAND ${LCOV_EXEC} --remove coverage.info '/usr/*' '*/_deps/*' '*/googletest-src/*' --output-file coverage.info.cleaned
-			COMMAND ${LCOV_EXEC} --list coverage.info.cleaned
-			COMMAND ${CMAKE_COMMAND} -E echo "Generating HTML report coverage_html..."
-			COMMAND ${GENHTML_EXEC} coverage.info.cleaned --output-directory coverage_html
-			WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-			DEPENDS tests_unit
-			COMMENT "Run tests and produce lcov/genhtml coverage report"
-		)
-	else()
-		add_custom_target(coverage
-			COMMAND ${CMAKE_COMMAND} -E echo "lcov or genhtml not found"
-			COMMAND ${CMAKE_COMMAND} -E echo "Install lcov and genhtml to generate coverage reports."
-			COMMENT "lcov/genhtml not available"
-		)
-	endif()
-endif()
+foreach(dataset small medium)
+  add_test(NAME cli_${dataset}
+           COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/integration/cli_test.sh $<TARGET_FILE:lottery> ${TEST_DATA_DIR}/${dataset})
+  set_tests_properties(cli_${dataset} PROPERTIES LABELS integration)
+endforeach()

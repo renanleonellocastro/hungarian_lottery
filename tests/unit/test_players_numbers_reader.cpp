@@ -8,7 +8,8 @@ using namespace hungarian;
 class TempFile {
 public:
     explicit TempFile(const std::string& content) {
-        path = "players_numbers_test.tmp";
+        // One file per test so that tests can run in parallel processes.
+        path = std::string("players_numbers_") + testing::UnitTest::GetInstance()->current_test_info()->name() + ".tmp";
         std::ofstream(path) << content;
     }
 

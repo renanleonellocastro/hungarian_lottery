@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
+# Configure and build the Release tree (application, tests and benchmark tool).
 set -euo pipefail
 
 BUILD_DIR=build
-mkdir -p "$BUILD_DIR"
 
-# Configure (defaults to Release as set in CMakeLists)
-cmake -S . -B "$BUILD_DIR" -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B "$BUILD_DIR" -DCMAKE_BUILD_TYPE=Release "$@"
+cmake --build "$BUILD_DIR" --config Release -j "$(nproc)"
 
-# Build everything (parallel)
-cmake --build "$BUILD_DIR" --config Release -j $(nproc)
-
-echo "Build finished (build directory: $BUILD_DIR)" 
+echo "Build finished (build directory: $BUILD_DIR)"
